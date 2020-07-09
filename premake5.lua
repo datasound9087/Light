@@ -1,6 +1,7 @@
 workspace "Raytracer"
     --x64
-    architecture "x64"
+    architecture "x86_64"
+    startproject "Raytracer"
     
     --confingurations wanted
     configurations
@@ -22,6 +23,9 @@ workspace "Raytracer"
     -- library includes relative to root
     libIncDir = {}
     libIncDir["glad"] = "Raytracer/lib/glad/include"
+    libIncDir["stb_image"] = "Raytracer/lib/stb_image/include"
+    libIncDir["glm"] = "Raytracer/lib/glm/include"
+    libIncDir["glfw"] = "Raytracer/lib/glfw/include"
 
     -- project src/lib locations relative to project
     projectSrc = "%{prj.name}/src"
@@ -30,6 +34,9 @@ workspace "Raytracer"
     -- library premake5 files to run/build
     group "External Dependencies"
         include "Raytracer/lib/glad"
+        include "Raytracer/lib/stb_image"
+        include "Raytracer/lib/glm"
+        include "Raytracer/lib/glfw"
     group ""
 
     project "Raytracer"
@@ -63,14 +70,18 @@ workspace "Raytracer"
         includedirs
         {
             projectSrc,
-            "%{libIncDir.glad}"
+            "%{libIncDir.glad}",
+            "%{libIncDir.stb_image}",
+            "%{libIncDir.glm}",
+            "%{libIncDir.glfw}"
         }
 
         --libs to link against
         links
         {
             "opengl32.lib",
-            "glad"
+            "glad",
+            "glfw"
         }
 
         --everything below is windows specific
