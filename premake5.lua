@@ -26,6 +26,7 @@ workspace "Raytracer"
     libIncDir["stb_image"] = "Raytracer/lib/stb_image/include"
     libIncDir["glm"] = "Raytracer/lib/glm/include"
     libIncDir["glfw"] = "Raytracer/lib/glfw/include"
+    libIncDir["spdlog"] = "Raytracer/lib/spdlog/include"
 
     -- project src/lib locations relative to project
     projectSrc = "%{prj.name}/src"
@@ -37,6 +38,7 @@ workspace "Raytracer"
         include "Raytracer/lib/stb_image"
         include "Raytracer/lib/glm"
         include "Raytracer/lib/glfw"
+        include "Raytracer/lib/spdlog"
     group ""
 
     project "Raytracer"
@@ -73,7 +75,8 @@ workspace "Raytracer"
             "%{libIncDir.glad}",
             "%{libIncDir.stb_image}",
             "%{libIncDir.glm}",
-            "%{libIncDir.glfw}"
+            "%{libIncDir.glfw}",
+            "%{libIncDir.spdlog}"
         }
 
         --libs to link against
@@ -81,7 +84,8 @@ workspace "Raytracer"
         {
             "opengl32.lib",
             "glad",
-            "glfw"
+            "glfw",
+            "spdlog"
         }
 
         --everything below is windows specific
