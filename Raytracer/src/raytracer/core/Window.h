@@ -1,5 +1,7 @@
 #pragma once
 
+#include "raytracer/event/EventBuffer.h";
+
 struct WindowProps
 {
 	std::string name;
@@ -8,14 +10,16 @@ struct WindowProps
 	bool fullscreen;
 	bool vsync;
 	bool resizeable;
+	bool visible;
 
 	WindowProps(const std::string& name = "App",
 		uint32_t width = 640,
 		uint32_t height = 480,
 		bool fullscreen = false,
 		bool vsync = true,
-		bool resizeable = true)
-		: name(name), width(width), height(height), fullscreen(fullscreen), vsync(vsync), resizeable(resizeable)
+		bool resizeable = true,
+		bool visible = true)
+		: name(name), width(width), height(height), fullscreen(fullscreen), vsync(vsync), resizeable(resizeable), visible(visible)
 	{}
 };
 
@@ -36,7 +40,15 @@ public:
 	virtual bool isFullscreen() const = 0;
 	virtual void setFullscreen(const bool enabled) = 0;
 	virtual bool isResizeable() const = 0;
+	virtual void showWindow(bool show) = 0;
+	virtual void shutdown() = 0;
+
+	virtual void setEventHandler(const std::shared_ptr<event::EventBuffer>& handler) = 0;
+	std::shared_ptr<event::EventBuffer> getEventHandler() const { return evtHandler; }
 
 	virtual void* getNativeWindow() const = 0;
+
+protected:
+	std::shared_ptr<event::EventBuffer> evtHandler;
 };
 

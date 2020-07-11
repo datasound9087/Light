@@ -22,12 +22,16 @@ public:
 	bool isFullscreen() const override { return props.fullscreen; };
 	void setFullscreen(const bool enabled) override;
 	bool isResizeable() const override { return props.resizeable; };
+	void showWindow(bool show) override;
+	void shutdown() override;
+
+	void setEventHandler(const std::shared_ptr<event::EventBuffer>& handler) override;
 
 	void* getNativeWindow() const override { return window; }
 
 private:
 	void init();
-	void shutdown();
+	void registerEventCallbacks();
 	void resizeWindow();
 
 private:
@@ -36,5 +40,18 @@ private:
 	WindowProps props;
 
 	std::unique_ptr<GraphicsContext> graphicsContext;
+
+	struct WindowedModeData
+	{
+		int x = 0;
+		int y = 0;
+		int width = 0;
+		int height = 0;
+	} windowModeData;
+
+	struct GLFWUserPointerData
+	{
+		std::shared_ptr<event::EventBuffer> eventHandler;
+	} glfwUserPointerData;
 };
 

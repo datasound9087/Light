@@ -15,6 +15,5 @@ int main()
 #ifdef CONFIG_DEBUG
 	system("pause");
 #endif
-
 	return 0;
 }

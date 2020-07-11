@@ -3,16 +3,16 @@
 
 #include "platform/opengl/GLRendererAPI.h"
 
-RendererAPI::API RendererAPI::api = RendererAPI::API::OPENGL;
+RendererAPI::API RendererAPI::api = RendererAPI::API::OpenGL;
 
 std::unique_ptr<RendererAPI> RendererAPI::create()
 {
 	switch (api)
 	{
-	case RendererAPI::API::NONE:
+	case RendererAPI::API::None:
 		ASSERT(false, "Invalid API: None");
 		return nullptr;
-	case RendererAPI::API::OPENGL:
+	case RendererAPI::API::OpenGL:
 		return std::make_unique<GLRendererAPI>();
 	}
 }

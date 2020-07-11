@@ -29,10 +29,6 @@ void glMessageCallback(
 	}
 }
 
-GLRendererAPI::~GLRendererAPI()
-{
-}
-
 void GLRendererAPI::init()
 {
 #if CONFIG_DEBUG
