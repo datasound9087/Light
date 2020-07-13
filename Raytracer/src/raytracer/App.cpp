@@ -24,13 +24,15 @@ void App::run()
 
 void App::init()
 {
-	std::array<float, 12> vertexData = {
-		 0.5f,  0.5f, 0.0f,  // top right
-		 0.5f, -0.5f, 0.0f,  // bottom right
-		-0.5f, -0.5f, 0.0f,  // bottom left
-		-0.5f,  0.5f, 0.0f
+	std::array<float, 20> vertexData = {
+		//pos                //tex coords
+		 0.5f,  0.5f, 0.0f,  1.0f, 1.0f, // top right
+		 0.5f, -0.5f, 0.0f,  1.0f, 0.0f, // bottom right
+		-0.5f, -0.5f, 0.0f,  0.0f, 0.0f, // bottom left
+		-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 	};
 	testVertexBuffer = VertexBuffer::create(DataTypes::Types::Float, vertexData.size(), vertexData.data(), VertexBuffer::Usage::STATIC);
+	testTexture = Texture2D::create("test", "C:\\Users\\Sam\\source\\repos\\Raytracer\\Raytracer\\assets\\textures\\test.png");
 
 	std::array<uint32_t, 6> indexData = {
 		0, 1, 2,   
@@ -38,11 +40,13 @@ void App::init()
 	};
 
 	BufferElement positions("position", DataTypes::Types::Float, 3);
+	BufferElement texCoords("texCoords", DataTypes::Types::Float, 2);
 	BufferLayout layout;
 	layout.addBufferElement(positions);
+	layout.addBufferElement(texCoords);
 	testIndexBuffer = IndexBuffer::create(indexData.size(), indexData.data());
 	
-	testShader = Shader::create("test", "C:\\Users\\Sam\\source\\repos\\Raytracer\\Raytracer\\assets\\shaders\\test.glsl");
+	testShader = Shader::create("test", "C:\\Users\\Sam\\source\\repos\\Raytracer\\Raytracer\\assets\\shaders\\test2.glsl");
 	testShader->setBufferLayout(layout);
 	RenderCommands::setClearColour(glm::vec4(0.0f));
 }
@@ -52,6 +56,7 @@ void App::render()
 	RenderCommands::clear();
 	testVertexBuffer->bind();
 	testIndexBuffer->bind();
+	testTexture->bind(0);
 	testShader->bind();
 
 	RenderCommands::drawIndexed(testIndexBuffer->getCount());

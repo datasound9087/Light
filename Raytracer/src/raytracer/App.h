@@ -5,6 +5,7 @@
 #include "raytracer/renderer/resource/buffer/VertexBuffer.h"
 #include "raytracer/renderer/resource/buffer/IndexBuffer.h"
 #include "raytracer/renderer/resource/shader/Shader.h"
+#include "raytracer/renderer/resource/texture/Texture2D.h"
 
 class App
 {
@@ -26,6 +27,7 @@ private:
 	std::shared_ptr<VertexBuffer> testVertexBuffer;
 	std::shared_ptr<IndexBuffer> testIndexBuffer;
 	std::shared_ptr<Shader> testShader;
+	std::shared_ptr<Texture2D> testTexture;
 	std::shared_ptr<event::EventBuffer> eventHandler;
 	bool running = true;
 };
