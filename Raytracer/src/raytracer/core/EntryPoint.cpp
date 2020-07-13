@@ -9,6 +9,12 @@ int main()
 	Log::init("App");
 #endif
 
+	std::string p = "#type vertex\r";
+	std::string t = "#type";
+	std::string v = "vertex";
+	INFO(p.find(t) == 0);
+	INFO(p.find(v));
+
 	auto app = std::make_unique<App>();
 	app->run();
 

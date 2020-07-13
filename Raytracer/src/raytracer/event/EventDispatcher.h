@@ -22,7 +22,7 @@ namespace event
 		template<typename U, typename F>
 		void dispatch(const F& func)
 		{
-			if (evt->getEventType() == U::getStaticType())
+			if (evt != nullptr && evt->getEventType() == U::getStaticType())
 			{
 				func(staticCastPtr<U>(evt));
 			}

@@ -27,6 +27,7 @@ DesktopWindow::~DesktopWindow()
 void DesktopWindow::onUpdate()
 {
 	glfwPollEvents();
+	graphicsContext->swapBuffers();
 }
 
 void DesktopWindow::setWidth(const uint32_t winWidth)

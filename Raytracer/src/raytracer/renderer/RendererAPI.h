@@ -21,6 +21,7 @@ public:
 	virtual void setViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) = 0;
 	virtual void setClearColour(const glm::vec4& colour) = 0;
 	virtual void clear() = 0;
+	virtual void drawIndexed(uint32_t count) = 0;
 
 private:
 	static API api;
