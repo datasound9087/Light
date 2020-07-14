@@ -29,7 +29,7 @@ std::shared_ptr<Shader> Shader::create(const std::string& name, const std::strin
 	}
 }
 
-std::shared_ptr<Shader> create(const std::string& name, const std::string& src, bool dummy)
+std::shared_ptr<Shader> Shader::create(const std::string& name, const std::string& src, bool dummy)
 {
 	switch (RendererAPI::getAPI())
 	{

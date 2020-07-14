@@ -11,9 +11,9 @@
 class Renderer2D
 {
 public:
-	Renderer2D(const OrthographicCamera& camera);
+	Renderer2D(const std::shared_ptr<OrthographicCamera>& camera);
 	~Renderer2D();
-	void setCamera(const OrthographicCamera& camera);
+	void setCamera(const std::shared_ptr<OrthographicCamera>& camera);
 
 	void beginScene();
 	void endScene();
@@ -27,24 +27,28 @@ public:
 	void drawLine(const glm::vec2& start, const glm::vec2& end, float thickness, const glm::vec4& colour);
 
 	void flush();
+
+public:
+    static const uint32_t MAX_QUADS = 20000;
+    static const uint32_t MAX_VERTICIES = MAX_QUADS * 4;
+    static const uint32_t MAX_INDICIES = MAX_QUADS * 6;
+    static const uint32_t MAX_TEXTURES = 32;
+
 private:
 	void init();
     float addTexture(const std::shared_ptr<Texture2D>& texture);
-    void drawVertex(const uint32_t num, const glm::mat4& transform, const glm::vec2& colour, float texIndex);
+    void drawVertex(const uint32_t num, const glm::mat4& transform, const glm::vec4& colour, float texIndex);
     void reset();
 	void shutdown();
 
 private:
-	OrthographicCamera camera;
+    static const int32_t NO_TEXTURE_INDEX = -1;
+
+	std::shared_ptr<OrthographicCamera> camera;
 
 	std::shared_ptr<VertexBuffer> vertBuffer;
 	std::shared_ptr<IndexBuffer> indexBuffer;
 	std::shared_ptr<Shader> shader;
-
-	static const uint32_t MAX_QUADS = 20000;
-	static const uint32_t MAX_VERTICIES = MAX_QUADS * 4;
-	static const uint32_t MAX_INDICIES = MAX_QUADS * 6;
-	static const uint32_t MAX_TEXTURES = 32;
 
 	std::array<std::shared_ptr<Texture2D>, MAX_TEXTURES> textureSlots;
     uint32_t nextTextureSlotFree;
@@ -70,34 +74,34 @@ private:
         "layout(location = 1) in float texIndex;\n"
         "layout(location = 2) in vec2 texCoord;\n"
         "layout(location = 3) in vec4 colour;\n"
-        "out fragInfo\n"
+        "out FRAG_INFO\n"
         "{\n"
         "    float texIndex;\n"
         "    vec2 texCoord;\n"
         "    vec4 colour;\n"
-        "};\n"
+        "} fragInfo;\n"
         "uniform mat4 VP;\n"
         "void main()\n"
         "{\n"
         "    fragInfo.texIndex = texIndex;\n"
-        "    fraginfo.texCoord = texCoord;\n"
+        "    fragInfo.texCoord = texCoord;\n"
         "    fragInfo.colour = colour;\n"
         "    gl_Position = VP * vec4(position, 0.0, 1.0);\n"
         "}\n"
         "#type fragment\n"
         "#version 450 core\n"
-        "in fragInfo\n"
+        "in FRAG_INFO\n"
         "{\n"
         "    float texIndex;\n"
         "    vec2 texCoord;\n"
         "    vec4 colour;\n"
-        "};\n"
+        "} fragInfo;\n"
         "out vec4 fragColour;\n"
         "uniform sampler2D[32] textureSamplers;\n"
         "void main()\n"
         "{\n"
-        "    fragColour = colour;\n"
-        "    switch (int(fragInfo.texIndex))\n"
+        "    fragColour = fragInfo.colour;\n"
+        "    /*switch (int(fragInfo.texIndex))\n"
         "    {\n"
         "    case 0:  fragColour *= texture(textureSamplers[0],  fragInfo.texCoord); break;\n"
         "    case 1:  fragColour *= texture(textureSamplers[1],  fragInfo.texCoord); break;\n"
@@ -131,7 +135,7 @@ private:
         "    case 29: fragColour *= texture(textureSamplers[29], fragInfo.texCoord); break;\n"
         "    case 30: fragColour *= texture(textureSamplers[30], fragInfo.texCoord); break;\n"
         "    case 31: fragColour *= texture(textureSamplers[31], fragInfo.texCoord); break;\n"
-        "    }\n"
+        "    }*/\n"
         "}\n";
 };
 

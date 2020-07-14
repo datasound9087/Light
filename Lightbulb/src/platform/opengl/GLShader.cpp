@@ -174,6 +174,9 @@ GLenum GLShader::getGLDataType(const DataTypes::Types& type)
 	case DataTypes::Types::Byte: return GL_BYTE;
 	case DataTypes::Types::uByte: return GL_UNSIGNED_BYTE;
 	case DataTypes::Types::Float: return GL_FLOAT;
+	case DataTypes::Types::Float2: return GL_FLOAT;
+	case DataTypes::Types::Float3: return GL_FLOAT;
+	case DataTypes::Types::Float4: return GL_FLOAT;
 	case DataTypes::Types::uInt: return GL_UNSIGNED_INT;
 	}
 
@@ -199,7 +202,7 @@ GLuint GLShader::compileShader(GLenum type, const std::string& src)
 		glGetShaderInfoLog(shader, errorLogLength, &errorLogLength, &infoLog[0]);
 		glDeleteShader(shader);
 
-		ERROR("Shader Compile Error:\n    {0}", infoLog.data());
+		ERROR("Shader Compile {1} Error:\n    {0}", infoLog.data(), type == GL_VERTEX_SHADER ? "Vertex" : type == GL_FRAGMENT_SHADER ? "Fragment" : "Geometry");
 		ASSERT(false, "Shader compile failure");
 	}
 

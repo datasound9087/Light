@@ -4,6 +4,7 @@
 class ICamera
 {
 public:
+	virtual ~ICamera() = default;
 	virtual const glm::mat4& getViewProjMatrix() const = 0;
 
 protected:

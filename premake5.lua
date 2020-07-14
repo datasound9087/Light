@@ -110,7 +110,7 @@ workspace "Light"
 
         --dist settings
         filter "configurations:Dist"
-            defines "CONFIG_RELEASE"
+            defines "CONFIG_DIST"
             runtime "Release"
             optimize "on"
 
@@ -133,28 +133,35 @@ workspace "Light"
         includedirs
         {
             "Lightbulb/src",
-            "%{libIncDir.glm}"
+            "%{libIncDir.glm}",
+            "%{libIncDir.spdlog}"
         }
 
         links
         {
-            "Lightbulb"
+            "Lightbulb",
+            "spdlog"
         }
 
         filter "system:windows"
-		    systemversion "latest"
+            systemversion "latest"
+
+            defines
+            {
+                "PLATFORM_WINDOWS"
+            }
 		
         filter "configurations:Debug"
-            defines "HZ_DEBUG"
+            defines "CONFIG_DEBUG"
             runtime "Debug"
             symbols "on"
 
         filter "configurations:Release"
-            defines "HZ_RELEASE"
+            defines "CONFIG_RELEASE"
             runtime "Release"
             optimize "on"
 
         filter "configurations:Dist"
-            defines "HZ_DIST"
+            defines "CONFIG_DIST"
             runtime "Release"
             optimize "on"

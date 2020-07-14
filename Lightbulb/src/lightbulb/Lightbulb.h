@@ -2,6 +2,7 @@
 
 //core includes
 #include "lbpch.h"
+#include "core/Log.h"
 #include "App.h"
 #include "core/Layer.h"
 #include "core/LayerStack.h"
@@ -16,3 +17,4 @@
 #include "renderer/resource/shader/ShaderLibrary.h"
 #include "renderer/resource/texture/Texture2D.h"
 #include "renderer/resource/texture/TextureLibrary.h"
+#include "renderer/Renderer2D.h"

@@ -1,8 +1,10 @@
 #include "lbpch.h"
 #include "Renderer2D.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include "RenderCommands.h"
+#include <glm/gtx/string_cast.hpp>
 
-Renderer2D::Renderer2D(const OrthographicCamera& camera)
+Renderer2D::Renderer2D(const std::shared_ptr<OrthographicCamera>& camera)
 	: camera(camera)
 {
 	init();
@@ -13,14 +15,15 @@ Renderer2D::~Renderer2D()
 	shutdown();
 }
 
-void Renderer2D::setCamera(const OrthographicCamera& camera)
+void Renderer2D::setCamera(const std::shared_ptr<OrthographicCamera>& camera)
 {
 	this->camera = camera;
 }
 
 void Renderer2D::beginScene()
 {
-	shader->setMat4("VP", camera.getViewProjMatrix());
+	shader->bind();
+	shader->setMat4("VP", camera->getViewProjMatrix());
 	indexCount = 0;
 	quadCount = 0;
 	quadVertexBufferPtr = quadVertexBuffer->data();
@@ -29,6 +32,8 @@ void Renderer2D::beginScene()
 
 void Renderer2D::endScene()
 {
+	size_t sizeUpload = sizeof(VertexData) * 4 * quadCount;
+	vertBuffer->setData(quadVertexBuffer->data(), sizeUpload);
 }
 
 void Renderer2D::drawQuad(const glm::vec2& pos, const glm::vec2& size, const glm::vec4& colour)
@@ -54,13 +59,14 @@ void Renderer2D::drawQuad(const glm::vec2& pos, const glm::vec2& size, float rot
 void Renderer2D::drawQuad(const glm::vec2& pos, const glm::vec2& size, float rotation, const std::shared_ptr<Texture2D>& texture, const glm::vec4& colour)
 {
 	constexpr uint32_t QUAD_VERTEX_COUNT = 4;
-	
+	//INFO("Camera: {0}", glm::to_string(camera->getViewProjMatrix()));
 	glm::mat4 transform = glm::scale(glm::mat4(1.0f), glm::vec3(size.x, size.y, 1.0f));
 	if (rotation != 0.0f)
 		transform = transform * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
 	transform = transform * glm::translate(glm::mat4(1.0f), glm::vec3(pos.x, pos.y, 1.0f));
+	//INFO("Transform Matrix: {0}", glm::to_string(transform));
 
-	float texIndex = -1.0f;
+	float texIndex = NO_TEXTURE_INDEX;
 	if (texture != nullptr)
 	{
 		texIndex = addTexture(texture);
@@ -77,19 +83,24 @@ void Renderer2D::drawQuad(const glm::vec2& pos, const glm::vec2& size, float rot
 void Renderer2D::drawLine(const glm::vec2& start, const glm::vec2& end, float thickness, const glm::vec4& colour)
 {
 	//maths
+	
 }
 
 void Renderer2D::flush()
 {
+	vertBuffer->bind();
+	indexBuffer->bind();
+	shader->bind();
 	for (int i = 0; i < nextTextureSlotFree; i++)
 	{
 		textureSlots[i]->bind(i);
 	}
+	RenderCommands::drawIndexed(indexCount);
 }
 
 void Renderer2D::init()
 {
-	vertBuffer = VertexBuffer::create(DataTypes::Types::Float, MAX_QUADS, VertexBuffer::Usage::DYNAMIC);
+	vertBuffer = VertexBuffer::create(sizeof(VertexData) * MAX_VERTICIES, VertexBuffer::Usage::DYNAMIC);
 	vertBuffer->setBufferLayout(
 	{
 		{"position", DataTypes::Types::Float2},
@@ -99,7 +110,6 @@ void Renderer2D::init()
 	});
 
 	quadVertexBuffer = std::make_unique<std::array<VertexData, MAX_VERTICIES>>();
-
 	shader = Shader::create("Renderer2D", RENDERER_2D_SHADER_SRC, false);
 	shader->setLayout(vertBuffer->getLayout());
 
@@ -118,7 +128,7 @@ void Renderer2D::init()
 
 		indicies[i + 3] = offset + 0;
 		indicies[i + 4] = offset + 2;
-		indicies[i + 5] = offset + 3;
+		indicies[i + 5] = offset + 0;
 
 		offset += 4;
 	}
@@ -129,18 +139,31 @@ void Renderer2D::init()
 
 float Renderer2D::addTexture(const std::shared_ptr<Texture2D>& texture)
 {
+	for (int i = 0; i < nextTextureSlotFree; i++)
+	{
+		if (textureSlots[i] == texture)
+		{
+			return i;
+		}
+	}
 
+	float texIndex = nextTextureSlotFree;
+	textureSlots[nextTextureSlotFree] = texture;
+	nextTextureSlotFree++;
+	return texIndex;
 }
 
-void Renderer2D::drawVertex(const uint32_t num, const glm::mat4& transform, const glm::vec2& colour, float texIndex)
+void Renderer2D::drawVertex(const uint32_t num, const glm::mat4& transform, const glm::vec4& colour, float texIndex)
 {
-											//top left	  //top right	//bot right		//bot left
-	constexpr glm::vec2 textureCoords[] = { {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f} , {0.0f, 0.0f} };
+											//top left	              //top right	           //bot right		        //bot left
+	constexpr glm::vec2 textureCoords[] = { {0.0f, 1.0f},           {1.0f, 1.0f},             {1.0f, 0.0f} ,            {0.0f, 0.0f} };
 	constexpr glm::vec4 quadCoords[] = { {-0.5f, 1.5f, 0.0f, 1.0f}, {1.5f, 1.5f, 0.0f, 1.0f}, {1.5f, -0.5f, 0.0f, 1.0f}, {-0.5f, -0.5f, 0.0f, 1.0f} };
 
+	INFO("Vertex {0}: {1}", num, glm::to_string(transform * quadCoords[num]));
 	quadVertexBufferPtr->position = transform * quadCoords[num];
 	quadVertexBufferPtr->texIndex = texIndex;
 	quadVertexBufferPtr->texCoord = textureCoords[num];
+	quadVertexBufferPtr->colour = colour;
 	quadVertexBufferPtr++;
 }
 
