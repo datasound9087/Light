@@ -1,2 +1,2 @@
-# Raytracer
-Raytracing experiment (3D)
+# Light
+3D and 2D graphics engine.
