@@ -18,7 +18,7 @@ public:
 
 	virtual void setData(const std::unique_ptr<void>& data, size_t size) = 0;
 	size_t getSize() const { return size; }
-	const BufferLayout& getLayout() const { return layout; }
+	BufferLayout getLayout() const { return layout; }
 	void setBufferLayout(const BufferLayout& layout) { this->layout = layout; }
 
 protected:

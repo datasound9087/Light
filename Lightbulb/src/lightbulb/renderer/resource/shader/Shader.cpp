@@ -28,3 +28,16 @@ std::shared_ptr<Shader> Shader::create(const std::string& name, const std::strin
 		return std::make_shared<GLShader>(name, vertSrc, fragSrc, geomSrc);
 	}
 }
+
+std::shared_ptr<Shader> create(const std::string& name, const std::string& src, bool dummy)
+{
+	switch (RendererAPI::getAPI())
+	{
+	case RendererAPI::API::None:
+		ASSERT(false, "Invalid API: None");
+		return nullptr;
+
+	case RendererAPI::API::OpenGL:
+		return std::make_shared<GLShader>(name, src, dummy);
+	}
+}

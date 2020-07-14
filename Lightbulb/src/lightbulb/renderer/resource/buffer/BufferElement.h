@@ -10,7 +10,10 @@ struct BufferElement
 	size_t offset;
 	bool normalised;
 
-	BufferElement(const std::string& name, const DataTypes::Types& type, uint32_t numPerVertex, bool normalised = false)
-		: name(name), type(type), numPerVertex(numPerVertex), offset(0), size(DataTypes::getSize(type) * numPerVertex), normalised(normalised)
-	{}
+	BufferElement(const std::string& name, const DataTypes::Types& type, bool normalised = false)
+		: name(name), type(type), offset(0), normalised(normalised)
+	{
+		this->numPerVertex = DataTypes::getComponentCount(type);
+		this->size = DataTypes::getSize(type) * numPerVertex;
+	}
 };

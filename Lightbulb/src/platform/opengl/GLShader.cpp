@@ -16,6 +16,13 @@ GLShader::GLShader(const std::string& name, const std::string& vertSrc, const st
 	createShader(vertSrc, fragSrc, geomSrc);
 }
 
+GLShader::GLShader(const std::string& name, const std::string& src, bool dummy)
+{
+	this->name = name;
+	std::array<std::string, 3> srcs = parseSrc(src);
+	createShader(srcs[0], srcs[1], srcs[2]);
+}
+
 GLShader::~GLShader()
 {
 	glDeleteProgram(shaderId);
@@ -58,6 +65,11 @@ std::array<std::string, 3> GLShader::readFromFile(const std::string& path)
 	else
 		ERROR("Could not read shader file: {0}", path);
 
+	return parseSrc(result);
+}
+
+std::array<std::string, 3> GLShader::parseSrc(const std::string& src)
+{
 	//seperate parts of file
 	const int READING_VERT = 0;
 	const int READING_FRAG = 1;
@@ -66,7 +78,7 @@ std::array<std::string, 3> GLShader::readFromFile(const std::string& path)
 	const std::string SHADER_TYPE_VERT = "vertex";
 	const std::string SHADER_TYPE_FRAG = "fragment";
 	const std::string SHADER_TYPE_GEOM = "geometry";
-	std::stringstream ss(result);
+	std::stringstream ss(src);
 	std::array<std::stringstream, 3> srcs;
 
 	int readingType = -1;
@@ -194,7 +206,7 @@ GLuint GLShader::compileShader(GLenum type, const std::string& src)
 	return shader;
 }
 
-void GLShader::setBufferLayout(BufferLayout& layout)
+void GLShader::setLayout(BufferLayout& layout)
 {
 	glGenVertexArrays(1, &vaoId);
 	glBindVertexArray(vaoId);
@@ -263,6 +275,11 @@ void GLShader::setInt2(const std::string& name, int val1, int val2, int val3)
 void GLShader::setInt4(const std::string& name, int val1, int val2, int val3, int val4)
 {
 	glUniform4i(getUniformLocation(name), val1, val2, val3, val4);
+}
+
+void GLShader::setIntArray(const std::string& name, int* arr, uint32_t count)
+{
+	glUniform1iv(getUniformLocation(name), count, arr);
 }
 
 void GLShader::setMat4(const std::string& name, const glm::mat3& value)

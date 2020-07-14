@@ -4,7 +4,10 @@
 class BufferLayout
 {
 public:
+	BufferLayout();
+	BufferLayout(const std::initializer_list<BufferElement>& elements);
 	void addBufferElement(const BufferElement& element);
+	void addBufferElements(const std::initializer_list<BufferElement>& elements);
 	const std::vector<BufferElement>& getElements();
 	uint32_t getStride() const { return stride; }
 

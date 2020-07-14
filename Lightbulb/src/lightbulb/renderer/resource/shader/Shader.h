@@ -12,8 +12,9 @@ class Shader : public IGPUResource
 public:
 	static std::shared_ptr<Shader> create(const std::string& name, const std::string& path);
 	static std::shared_ptr<Shader> create(const std::string& name, const std::string& vertSrc, const std::string& fragSrc, const std::string& geometrySrc = "");
+	static std::shared_ptr<Shader> create(const std::string& name, const std::string& src, bool dummy);
 
-	virtual void setBufferLayout(BufferLayout& layout) = 0;
+	virtual void setLayout(BufferLayout& layout) = 0;
 
 	virtual void setFloat(const std::string& name, float value) = 0;
 	virtual void setFloat2(const std::string& name, const glm::vec2& value) = 0;
@@ -24,6 +25,8 @@ public:
 	virtual void setInt3(const std::string& name, int val1, int val2) = 0;
 	virtual void setInt2(const std::string& name, int val1, int val2, int val3) = 0;
 	virtual void setInt4(const std::string& name, int val1, int val2, int val3, int val4) = 0;
+
+	virtual void setIntArray(const std::string& name, int* arr, uint32_t count) = 0;
 
 	virtual void setMat4(const std::string& name, const glm::mat3& value) = 0;
 	virtual void setMat3(const std::string& name, const glm::mat4& value) = 0;
