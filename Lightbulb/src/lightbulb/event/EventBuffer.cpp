@@ -4,14 +4,15 @@
 namespace event
 {
 
-	void EventBuffer::fireEvent(std::unique_ptr<Event>& event)
+	void EventBuffer::fireEvent(std::shared_ptr<Event>& event)
 	{
-		eventBuffer.push(std::move(event));
+		eventBuffer.push(event);
 	}
-	std::unique_ptr<Event> EventBuffer::nextEvent()
+
+	std::shared_ptr<Event> EventBuffer::nextEvent()
 	{
-		auto evt = std::move(eventBuffer.front());
+		auto evt = eventBuffer.front();
 		eventBuffer.pop();
-		return std::move(evt);
+		return evt;
 	}
 }

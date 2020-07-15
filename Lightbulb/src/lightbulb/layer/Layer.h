@@ -15,11 +15,11 @@ public:
 	//on made front of stack
 	virtual void onMadeFront() {}
 	//events
-	virtual void onEvent(const std::unique_ptr<event::Event>& evt) {}
+	virtual void onEvent(const std::shared_ptr<event::Event>& evt) {}
 	//updates
 	virtual void update() = 0;
 	//render
-	virtual void render() = 0;
+	virtual void renderLayer() = 0;
 	//on move back in layer stack
 	virtual void onMoveBack() {}
 	//on removed from stack

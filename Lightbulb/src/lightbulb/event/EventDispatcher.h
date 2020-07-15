@@ -10,8 +10,8 @@ namespace event
 	class EventDispatcher
 	{
 	public:
-		EventDispatcher(std::unique_ptr<Event>& evt) 
-			:evt(std::move(evt))
+		EventDispatcher(std::shared_ptr<Event>& evt)
+			:evt(evt)
 		{}
 
 		/* U - The type of Event
@@ -22,21 +22,13 @@ namespace event
 		template<typename U, typename F>
 		void dispatch(const F& func)
 		{
-			if (evt != nullptr && evt->getEventType() == U::getStaticType())
+			if (evt->getEventType() == U::getStaticType())
 			{
-				func(staticCastPtr<U>(evt));
+				func(std::static_pointer_cast<U>(evt));
 			}
 		}
 
 	private:
-
-		template<typename D, typename B>
-		std::unique_ptr<D> staticCastPtr(std::unique_ptr<B>& base)
-		{
-			return std::unique_ptr<D>(static_cast<D*>(base.release()));
-		}
-
-	private:
-		std::unique_ptr<Event> evt;
+		std::shared_ptr<Event> evt;
 	};
 }

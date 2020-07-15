@@ -2,6 +2,7 @@
 
 #include "lightbulb/core/Window.h"
 #include "event/WindowEvents.h"
+#include "layer/LayerStack.h"
 
 class App
 {
@@ -13,22 +14,24 @@ public:
 
 protected:
 
-	virtual void init() = 0;
-	virtual void update() = 0;
-	virtual void render() = 0;
-	virtual void onEvent(const std::unique_ptr<event::Event>& event) = 0;
+	virtual void init() {}
+	virtual void update() {}
+	virtual void render() {}
+	virtual void onEvent(const std::shared_ptr<event::Event>& event) {}
 	virtual void windowClosing() {}
-	virtual void shutdown() = 0;
+	virtual void shutdown() {}
 
 	void shouldClose(bool close) { running = close; }
 
 private:
 	void handleEvents();
-	void WindowClosing(std::unique_ptr<event::WindowClosedEvent>& evt);
+	void WindowClosing(std::shared_ptr<event::WindowClosedEvent>& evt);
 
 protected:
-	std::shared_ptr<event::EventBuffer> eventHandler;
 	std::unique_ptr<Window> window;
+	std::shared_ptr<event::EventBuffer> eventHandler;
+
+	std::unique_ptr<LayerStack> layerStack;
 
 private:
 	bool running = true;

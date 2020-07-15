@@ -8,6 +8,7 @@ App::App()
 	INFO("Started");
 	window = Window::create();
 	eventHandler = window->getEventHandler();
+	layerStack = std::make_unique<LayerStack>();
 }
 
 void App::run()
@@ -18,6 +19,7 @@ void App::run()
 		window->onUpdate();
 		handleEvents();
 		update();
+		layerStack->render();
 		render();
 	}
 
@@ -38,12 +40,12 @@ void App::handleEvents()
 		event::EventDispatcher dispatcher(evt);
 		dispatcher.dispatch<event::WindowClosedEvent>(EVENT_BIND_FUNC(App::WindowClosing));
 
-		if (evt != nullptr)
-			onEvent(evt);
+		onEvent(evt);
+		layerStack->onEvent(evt);
 	}
 }
 
-void App::WindowClosing(std::unique_ptr<event::WindowClosedEvent>& evt)
+void App::WindowClosing(std::shared_ptr<event::WindowClosedEvent>& evt)
 {
 	windowClosing();
 	running = false;

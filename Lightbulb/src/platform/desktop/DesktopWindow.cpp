@@ -135,12 +135,12 @@ void DesktopWindow::registerEventCallbacks()
 		
 		if (focus == GLFW_TRUE)
 		{
-			std::unique_ptr<event::Event> evt = std::make_unique<event::WindowFocusGainedEvent>();
+			std::shared_ptr<event::Event> evt = std::make_shared<event::WindowFocusGainedEvent>();
 			data.eventHandler->fireEvent(evt);
 		}
 		else
 		{
-			std::unique_ptr<event::Event> evt = std::make_unique<event::WindowFocusLostEvent>();
+			std::shared_ptr<event::Event> evt = std::make_shared<event::WindowFocusLostEvent>();
 			data.eventHandler->fireEvent(evt);
 		}
 	});
@@ -149,7 +149,7 @@ void DesktopWindow::registerEventCallbacks()
 	{
 		GLFWUserPointerData& data = *(GLFWUserPointerData*)glfwGetWindowUserPointer(window);
 
-		std::unique_ptr<event::Event> evt = std::make_unique<event::WindowMovedEvent>(xPos, yPos);
+		std::shared_ptr<event::Event> evt = std::make_shared<event::WindowMovedEvent>(xPos, yPos);
 		data.eventHandler->fireEvent(evt);
 	});
 
@@ -157,14 +157,14 @@ void DesktopWindow::registerEventCallbacks()
 	{
 			GLFWUserPointerData& data = *(GLFWUserPointerData*)glfwGetWindowUserPointer(window);
 
-			std::unique_ptr<event::Event> evt = std::make_unique<event::WindowResizedEvent>(width, height);
+			std::shared_ptr<event::Event> evt = std::make_shared<event::WindowResizedEvent>(width, height);
 			data.eventHandler->fireEvent(evt);
 	});
 
 	glfwSetWindowCloseCallback(window, [](GLFWwindow* window)
 	{
 			GLFWUserPointerData& data = *(GLFWUserPointerData*)glfwGetWindowUserPointer(window);
-			std::unique_ptr<event::Event> evt = std::make_unique<event::WindowClosedEvent>();
+			std::shared_ptr<event::Event> evt = std::make_shared<event::WindowClosedEvent>();
 			data.eventHandler->fireEvent(evt);
 	});
 
@@ -172,7 +172,7 @@ void DesktopWindow::registerEventCallbacks()
 	{
 			GLFWUserPointerData& data = *(GLFWUserPointerData*)glfwGetWindowUserPointer(window);
 
-			std::unique_ptr<event::Event> evt = std::make_unique<event::MouseScrolledEvent>(xOffset, yOffset);
+			std::shared_ptr<event::Event> evt = std::make_shared<event::MouseScrolledEvent>(xOffset, yOffset);
 			data.eventHandler->fireEvent(evt);
 	});
 
@@ -180,7 +180,7 @@ void DesktopWindow::registerEventCallbacks()
 	{
 			GLFWUserPointerData& data = *(GLFWUserPointerData*)glfwGetWindowUserPointer(window);
 
-			std::unique_ptr<event::Event> evt = std::make_unique<event::MouseMovedEvent>(xPos, yPos);
+			std::shared_ptr<event::Event> evt = std::make_shared<event::MouseMovedEvent>(xPos, yPos);
 			data.eventHandler->fireEvent(evt);
 	});
 
@@ -192,13 +192,13 @@ void DesktopWindow::registerEventCallbacks()
 		{
 		case GLFW_PRESS:
 		{
-			std::unique_ptr<event::Event> evt = std::make_unique<event::MouseButtonPressedEvent>(button, mods);
+			std::shared_ptr<event::Event> evt = std::make_shared<event::MouseButtonPressedEvent>(button, mods);
 			data.eventHandler->fireEvent(evt);
 			break;
 		}
 		case GLFW_RELEASE:
 		{
-			std::unique_ptr<event::Event> evt = std::make_unique<event::MouseButtonReleasedEvent>(button, mods);
+			std::shared_ptr<event::Event> evt = std::make_shared<event::MouseButtonReleasedEvent>(button, mods);
 			data.eventHandler->fireEvent(evt);
 			break;
 		}}
@@ -212,13 +212,13 @@ void DesktopWindow::registerEventCallbacks()
 		{
 		case GLFW_PRESS:
 		{
-			std::unique_ptr<event::Event> evt = std::make_unique<event::KeyboardPressedEvent>(keyCode, mods);
+			std::shared_ptr<event::Event> evt = std::make_shared<event::KeyboardPressedEvent>(keyCode, mods);
 			data.eventHandler->fireEvent(evt);
 			break;
 		}
 		case GLFW_RELEASE:
 		{
-			std::unique_ptr<event::Event> evt = std::make_unique<event::KeyboardReleasedEvent>(keyCode, mods);
+			std::shared_ptr<event::Event> evt = std::make_shared<event::KeyboardReleasedEvent>(keyCode, mods);
 			data.eventHandler->fireEvent(evt);
 			break;
 		}}
@@ -228,7 +228,7 @@ void DesktopWindow::registerEventCallbacks()
 	{
 		GLFWUserPointerData& data = *(GLFWUserPointerData*)glfwGetWindowUserPointer(window);
 
-		std::unique_ptr<event::Event> evt = std::make_unique<event::KeyboardTypedEvent>(codePoint);
+		std::shared_ptr<event::Event> evt = std::make_shared<event::KeyboardTypedEvent>(codePoint);
 		data.eventHandler->fireEvent(evt);
 	});
 }

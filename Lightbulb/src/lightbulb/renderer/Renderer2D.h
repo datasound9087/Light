@@ -6,7 +6,7 @@
 #include "resource/buffer/VertexBuffer.h"
 #include "resource/buffer/IndexBuffer.h"
 #include "resource/shader/Shader.h"
-#include "OrthographicCamera.h"
+#include "lightbulb/core/OrthographicCamera.h"
 
 class Renderer2D
 {
@@ -26,7 +26,9 @@ public:
 
     void drawQuad(const glm::vec2& pos, const glm::vec2& size, const std::array<glm::vec4, 4>& cols);
     void drawQuad(const glm::vec2& pos, const glm::vec2& size, float rotation, const std::array<glm::vec4, 4>& cols);
-	void drawLine(const glm::vec2& start, const glm::vec2& end, float thickness, const glm::vec4& colour);
+
+	void drawLine(const glm::vec2& start, const glm::vec2& end, const glm::vec4& colour, float thickness = DEFAULT_LINE_THICKNESS);
+    void drawRect(const glm::vec2& pos, const glm::vec2& size, const glm::vec4& colour, float thickness = DEFAULT_LINE_THICKNESS);
 
 	void flush();
 
@@ -36,13 +38,15 @@ public:
     static const uint32_t MAX_INDICIES = MAX_QUADS * 6;
     static const uint32_t MAX_TEXTURES = 32;
     static const uint32_t QUAD_VERTEX_COUNT = 4;
+    static const float DEFAULT_LINE_THICKNESS;
 
 private:
 	void init();
     glm::mat4 calculateTransform(const glm::vec2& pos, const glm::vec2& size, float rotation);
     int addTexture(const std::shared_ptr<Texture2D>& texture);
     void drawVertex(const uint32_t num, const glm::mat4& transform, const glm::vec4& colour, int texIndex);
-    void reset();
+    bool needFlush();
+    void flushReset();
 	void shutdown();
 
 private:

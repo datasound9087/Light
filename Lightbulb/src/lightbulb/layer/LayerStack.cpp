@@ -14,16 +14,29 @@ LayerStack::~LayerStack()
 void LayerStack::pushLayer(const std::shared_ptr<Layer>& layer)
 {
 	layer->init();
-	layerStack.back()->onMoveBack();
+	if(layerStack.size() > 1) layerStack.back()->onMoveBack();
 	layerStack.push_back(layer);
 }
 
 void LayerStack::pop()
 {
-	auto layer = layerStack.back();
-	layerStack.pop_back();
-	layerStack.back()->onMadeFront();
-	layer->shutdown();
+	if (!layerStack.empty())
+	{
+		auto layer = layerStack.back();
+		layerStack.pop_back();
+		layerStack.back()->onMadeFront();
+		layer->shutdown();
+	}
+}
+
+void LayerStack::onEvent(const std::shared_ptr<event::Event>& evt)
+{
+	auto it = layerStack.rbegin();
+	for (it; it != layerStack.rend(); it++)
+	{
+		auto layer = *it;
+		layer->onEvent(evt);
+	}
 }
 
 void LayerStack::update()
@@ -42,6 +55,6 @@ void LayerStack::render()
 	for (it; it != layerStack.rend(); it++)
 	{
 		auto layer = *it;
-		layer->render();
+		layer->renderLayer();
 	}
 }

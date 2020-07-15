@@ -4,8 +4,8 @@
 #include "lbpch.h"
 #include "core/Log.h"
 #include "App.h"
-#include "core/Layer.h"
-#include "core/LayerStack.h"
+#include "layer/Layer.h"
+#include "layer/LayerStack.h"
 #include "event/Input.h"
 
 //graphics
