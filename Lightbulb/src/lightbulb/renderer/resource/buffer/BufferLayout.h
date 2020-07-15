@@ -9,7 +9,7 @@ public:
 	void addBufferElement(const BufferElement& element);
 	void addBufferElements(const std::initializer_list<BufferElement>& elements);
 	const std::vector<BufferElement>& getElements();
-	uint32_t getStride() const { return stride; }
+	size_t getStride() const { return stride; }
 
 private:
 	void calcStrideOffset();

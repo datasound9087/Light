@@ -27,8 +27,8 @@ public:
 
 	void setIntArray(const std::string& name, int* arr, uint32_t count) override;
 
-	void setMat4(const std::string& name, const glm::mat3& value) override;
-	void setMat3(const std::string& name, const glm::mat4& value) override;
+	void setMat4(const std::string& name, const glm::mat4& value) override;
+	void setMat3(const std::string& name, const glm::mat3& value) override;
 
 private:
 	std::array<std::string, 3> readFromFile(const std::string& path);

@@ -15,6 +15,7 @@ public:
 
 	static std::shared_ptr<VertexBuffer> create(const DataTypes::Types& type, size_t size, const Usage& usage);
 	static std::shared_ptr<VertexBuffer> create(size_t size, const Usage& usage);
+	static std::shared_ptr<VertexBuffer> create(size_t size, void* data, const Usage& usage);
 	static std::shared_ptr<VertexBuffer> create(const DataTypes::Types& type, size_t size, void* data, const Usage& usage);
 
 	virtual void setData(const void* data, size_t size) = 0;

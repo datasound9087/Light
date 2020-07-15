@@ -247,6 +247,11 @@ void DesktopWindow::shutdown()
 	}
 }
 
+double DesktopWindow::getWindowTime()
+{
+	return glfwGetTime();
+}
+
 void DesktopWindow::resizeWindow()
 {
 	glfwSetWindowSize(window, (int)props.width, (int)props.height);

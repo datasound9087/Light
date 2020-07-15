@@ -14,6 +14,6 @@ struct BufferElement
 		: name(name), type(type), offset(0), normalised(normalised)
 	{
 		this->numPerVertex = DataTypes::getComponentCount(type);
-		this->size = DataTypes::getSize(type) * numPerVertex;
+		this->size = DataTypes::getSize(type);
 	}
 };

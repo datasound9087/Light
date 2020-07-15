@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lightbulb/event/EventBuffer.h";
+#include "lightbulb/event/EventBuffer.h"
 
 struct WindowProps
 {
@@ -42,6 +42,8 @@ public:
 	virtual bool isResizeable() const = 0;
 	virtual void showWindow(bool show) = 0;
 	virtual void shutdown() = 0;
+
+	virtual double getWindowTime() = 0;
 
 	virtual void setEventHandler(const std::shared_ptr<event::EventBuffer>& handler) = 0;
 	std::shared_ptr<event::EventBuffer> getEventHandler() const { return evtHandler; }

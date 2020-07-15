@@ -28,9 +28,9 @@ private:
 
 protected:
 	std::shared_ptr<event::EventBuffer> eventHandler;
+	std::unique_ptr<Window> window;
 
 private:
-	std::unique_ptr<Window> window;
 	bool running = true;
 };
 

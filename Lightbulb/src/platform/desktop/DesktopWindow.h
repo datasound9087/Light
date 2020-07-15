@@ -25,6 +25,8 @@ public:
 	void showWindow(bool show) override;
 	void shutdown() override;
 
+	double getWindowTime() override;
+
 	void setEventHandler(const std::shared_ptr<event::EventBuffer>& handler) override;
 
 	void* getNativeWindow() const override { return window; }

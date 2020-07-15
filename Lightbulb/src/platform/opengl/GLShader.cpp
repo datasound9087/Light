@@ -177,6 +177,7 @@ GLenum GLShader::getGLDataType(const DataTypes::Types& type)
 	case DataTypes::Types::Float2: return GL_FLOAT;
 	case DataTypes::Types::Float3: return GL_FLOAT;
 	case DataTypes::Types::Float4: return GL_FLOAT;
+	case DataTypes::Types::Int: return GL_INT;
 	case DataTypes::Types::uInt: return GL_UNSIGNED_INT;
 	}
 
@@ -242,55 +243,66 @@ bool GLShader::uniformInCache(const std::string& name)
 
 void GLShader::setFloat(const std::string& name, float value)
 {
+	bind();
 	glUniform1f(getUniformLocation(name), value);
 }
 
 void GLShader::setFloat2(const std::string& name, const glm::vec2& value)
 {
+	bind();
 	glUniform2f(getUniformLocation(name), value.x, value.y);
 }
 
 void GLShader::setFloat3(const std::string& name, const glm::vec3& value)
 {
+	bind();
 	glUniform3f(getUniformLocation(name), value.x, value.y, value.z);
 }
 
 void GLShader::setFloat4(const std::string& name, const glm::vec4& value)
 {
+	bind();
 	glUniform4f(getUniformLocation(name), value.x, value.y, value.z, value.w);
 }
 
 void GLShader::setInt(const std::string& name, int value)
 {
+	bind();
 	glUniform1i(getUniformLocation(name), value);
 }
 
 void GLShader::setInt3(const std::string& name, int val1, int val2)
 {
+	bind();
 	glUniform2i(getUniformLocation(name), val1, val2);
 }
 
 void GLShader::setInt2(const std::string& name, int val1, int val2, int val3)
 {
+	bind();
 	glUniform3i(getUniformLocation(name), val1, val2, val3);
 }
 
 void GLShader::setInt4(const std::string& name, int val1, int val2, int val3, int val4)
 {
+	bind();
 	glUniform4i(getUniformLocation(name), val1, val2, val3, val4);
 }
 
 void GLShader::setIntArray(const std::string& name, int* arr, uint32_t count)
 {
+	bind();
 	glUniform1iv(getUniformLocation(name), count, arr);
 }
 
-void GLShader::setMat4(const std::string& name, const glm::mat3& value)
+void GLShader::setMat4(const std::string& name, const glm::mat4& value)
 {
+	bind();
 	glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
 }
 
-void GLShader::setMat3(const std::string& name, const glm::mat4& value)
+void GLShader::setMat3(const std::string& name, const glm::mat3& value)
 {
+	bind();
 	glUniformMatrix3fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
 }
