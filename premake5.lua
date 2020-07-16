@@ -27,6 +27,7 @@ workspace "Light"
     libIncDir["glm"] = "Lightbulb/lib/glm/include"
     libIncDir["glfw"] = "Lightbulb/lib/glfw/include"
     libIncDir["spdlog"] = "Lightbulb/lib/spdlog/include"
+    libIncDir["freetype"] = "Lightbulb/lib/freetype/include"
 
     -- project src/lib locations relative to project
     projectSrc = "%{prj.name}/src"
@@ -76,7 +77,8 @@ workspace "Light"
             "%{libIncDir.stb_image}",
             "%{libIncDir.glm}",
             "%{libIncDir.glfw}",
-            "%{libIncDir.spdlog}"
+            "%{libIncDir.spdlog}",
+            "%{libIncDir.freetype}"
         }
 
         --libs to link against
@@ -85,7 +87,8 @@ workspace "Light"
             "opengl32.lib",
             "glad",
             "glfw",
-            "spdlog"
+            "spdlog",
+            "Lightbulb/lib/freetype/objs/freetype.lib"
         }
 
         --everything below is windows specific

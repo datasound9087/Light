@@ -25,7 +25,8 @@ protected:
 
 private:
 	void handleEvents();
-	void WindowClosing(std::shared_ptr<event::WindowClosedEvent>& evt);
+	void WindowClosing(const std::shared_ptr<event::WindowClosedEvent>& evt);
+	void windowResize(const std::shared_ptr<event::WindowResizedEvent>& evt);
 
 protected:
 	std::unique_ptr<Window> window;

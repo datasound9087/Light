@@ -1,6 +1,6 @@
 #pragma once
 #include <glad/glad.h>
-#include "lightbulb/renderer/resource/texture/Texture2D.h"
+#include "lightbulb/graphics/resource/texture/Texture2D.h"
 
 class GLTexture2D : public Texture2D
 {

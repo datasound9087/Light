@@ -15,7 +15,7 @@ public:
 	//on made front of stack
 	virtual void onMadeFront() {}
 	//events
-	virtual void onEvent(const std::shared_ptr<event::Event>& evt) {}
+	virtual void onLayerEvent(const std::shared_ptr<event::Event>& evt) {}
 	//updates
 	virtual void update() = 0;
 	//render

@@ -35,7 +35,7 @@ void LayerStack::onEvent(const std::shared_ptr<event::Event>& evt)
 	for (it; it != layerStack.rend(); it++)
 	{
 		auto layer = *it;
-		layer->onEvent(evt);
+		layer->onLayerEvent(evt);
 	}
 }
 

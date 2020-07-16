@@ -10,7 +10,7 @@ namespace event
 	class EventDispatcher
 	{
 	public:
-		EventDispatcher(std::shared_ptr<Event>& evt)
+		EventDispatcher(const std::shared_ptr<Event>& evt)
 			:evt(evt)
 		{}
 

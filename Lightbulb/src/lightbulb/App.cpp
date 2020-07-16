@@ -39,14 +39,20 @@ void App::handleEvents()
 
 		event::EventDispatcher dispatcher(evt);
 		dispatcher.dispatch<event::WindowClosedEvent>(EVENT_BIND_FUNC(App::WindowClosing));
+		dispatcher.dispatch<event::WindowResizedEvent>(EVENT_BIND_FUNC(App::windowResize));
 
 		onEvent(evt);
 		layerStack->onEvent(evt);
 	}
 }
 
-void App::WindowClosing(std::shared_ptr<event::WindowClosedEvent>& evt)
+void App::WindowClosing(const std::shared_ptr<event::WindowClosedEvent>& evt)
 {
 	windowClosing();
 	running = false;
+}
+
+void App::windowResize(const std::shared_ptr<event::WindowResizedEvent>& evt)
+{
+	RenderCommands::setViewport(0, 0, evt->getWidth(), evt->getHeight());
 }

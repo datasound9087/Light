@@ -1,0 +1,3 @@
+Static
+Multithreaded
+Release (Optimised)

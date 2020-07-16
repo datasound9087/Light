@@ -1,9 +1,10 @@
 #include "LaserLayer2D.h"
 #include "lightbulb/core/OrthographicCamera.h"
 #include "lightbulb/graphics/Colour.h"
+#include "lightbulb/event/EventDispatcher.h"
 
-LaserLayer2D::LaserLayer2D(uint32_t width, uint32_t height)
-	: Layer2D("LaserLayer2D", std::make_shared<OrthographicCamera>(0, width, 0, height))
+LaserLayer2D::LaserLayer2D(int width, int height)
+	: Layer2D("LaserLayer2D", width, height)
 {
 }
 
@@ -12,10 +13,6 @@ LaserLayer2D::~LaserLayer2D()
 }
 
 void LaserLayer2D::init()
-{
-}
-
-void LaserLayer2D::onEvent(const std::shared_ptr<event::Event>& evt)
 {
 }
 
