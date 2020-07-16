@@ -116,10 +116,11 @@ void Renderer2D::drawLine(const glm::vec2& start, const glm::vec2& end, const gl
 	if (needFlush()) flushReset();
 	int texIndex = NO_TEXTURE_INDEX;
 
-	glm::vec4 topleft = glm::vec4(start, 0.0f, 1.0f);
-	glm::vec4 topRight = glm::vec4(end, 0.0f, 1.0f);
-	glm::vec4 botRight = glm::vec4(end + glm::vec2(thickness), 0.0f, 1.0f);
-	glm::vec4 botLeft = glm::vec4(start + glm::vec2(thickness), 0.0f, 1.0f);
+	glm::vec2 thicknessOffset = glm::vec2(thickness / 2.0f);
+	glm::vec4 topleft = glm::vec4(start - thicknessOffset, 0.0f, 1.0f);
+	glm::vec4 topRight = glm::vec4(end - thicknessOffset, 0.0f, 1.0f);
+	glm::vec4 botRight = glm::vec4(end + thicknessOffset, 0.0f, 1.0f);
+	glm::vec4 botLeft = glm::vec4(start + thicknessOffset, 0.0f, 1.0f);
 	
 	drawVertex(0, topleft, colour, texIndex);
 	drawVertex(1, topRight, colour, texIndex);

@@ -40,4 +40,6 @@ void LaserLayer2D::render()
 	renderer->drawLine(glm::vec2(300.0f, 10.0f), glm::vec2(300.0f, 60.0f), colour::COL_RED);
 	renderer->drawLine(glm::vec2(310.0f, 60.0f), glm::vec2(310.0f, 10.0f), colour::COL_RED);
 	//diags
+	renderer->drawLine(glm::vec2(400.0f, 10.0f), glm::vec2(350.0f, 80.0f), colour::COL_GREEN);
+	renderer->drawLine(glm::vec2(380.0f, 80.0f), glm::vec2(430.0f, 10.0f), colour::COL_GREEN);
 }
