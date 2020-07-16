@@ -44,7 +44,7 @@ private:
 	void init();
     glm::mat4 calculateTransform(const glm::vec2& pos, const glm::vec2& size, float rotation);
     int addTexture(const std::shared_ptr<Texture2D>& texture);
-    void drawVertex(const uint32_t num, const glm::mat4& transform, const glm::vec4& colour, int texIndex);
+    void drawVertex(const uint32_t num, const glm::vec4& pos, const glm::vec4& colour, int texIndex);
     bool needFlush();
     void flushReset();
 	void shutdown();

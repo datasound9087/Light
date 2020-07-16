@@ -29,4 +29,15 @@ void LaserLayer2D::render()
 	renderer->drawQuad(glm::vec2(0.0f), glm::vec2(100.0f), colour::COL_RED);
 	renderer->drawQuad(glm::vec2(100.0f), glm::vec2(100.0f), colour::COL_GREEN);
 	renderer->drawQuad(glm::vec2(200.0f), glm::vec2(100.0f), colour::COL_BLUE);
+
+	renderer->drawQuad(glm::vec2(200.0f), glm::vec2(100.0f), 45.0f, colour::COL_WHITE);
+
+	//line testing
+	//horizontal
+	renderer->drawLine(glm::vec2(200.0f, 10.0f), glm::vec2(250.0f, 10.0f), colour::COL_RED);
+	renderer->drawLine(glm::vec2(250.0f, 20.0f), glm::vec2(200.0f, 20.0f), colour::COL_RED);
+	//vertical
+	renderer->drawLine(glm::vec2(300.0f, 10.0f), glm::vec2(300.0f, 60.0f), colour::COL_RED);
+	renderer->drawLine(glm::vec2(310.0f, 60.0f), glm::vec2(310.0f, 10.0f), colour::COL_RED);
+	//diags
 }

@@ -62,18 +62,24 @@ void Renderer2D::drawQuad(const glm::vec2& pos, const glm::vec2& size, float rot
 void Renderer2D::drawQuad(const glm::vec2& pos, const glm::vec2& size, float rotation, const std::shared_ptr<Texture2D>& texture, const glm::vec4& colour)
 {
 	if (needFlush()) flushReset();
-	glm::mat4 transform = calculateTransform(pos, size, rotation);
 
 	float texIndex = NO_TEXTURE_INDEX;
 	if (texture != nullptr)
 	{
 		texIndex = addTexture(texture);
 	}
-		
-	for (int i = 0; i < QUAD_VERTEX_COUNT; i++)
-	{
-		drawVertex(i, transform, colour, texIndex);
-	}
+
+	glm::mat4 transform = calculateTransform(pos, size, rotation);
+	glm::vec4 topleft = glm::vec4(pos, 0.0f, 1.0f);
+	glm::vec4 topRight = glm::vec4(glm::vec2(pos.x + size.x, pos.y), 0.0f, 1.0f);
+	glm::vec4 botRight = glm::vec4(pos + size, 0.0f, 1.0f);
+	glm::vec4 botLeft = glm::vec4(glm::vec2(pos.x, pos.y + size.y), 0.0f, 1.0f);
+
+	drawVertex(0, transform * topleft, colour, texIndex);
+	drawVertex(1, transform * topRight, colour, texIndex);
+	drawVertex(2, transform * botRight, colour, texIndex);
+	drawVertex(3, transform * botLeft, colour, texIndex);
+
 	indexCount += 6;
 	quadCount++;
 }
@@ -87,55 +93,38 @@ void Renderer2D::drawQuad(const glm::vec2& pos, const glm::vec2& size, float rot
 {
 	if (needFlush()) flushReset();
 
+	int texIndex = NO_TEXTURE_INDEX;
+
 	glm::mat4 transform = calculateTransform(pos, size, rotation);
-	float texIndex = NO_TEXTURE_INDEX;
-	for (int i = 0; i < QUAD_VERTEX_COUNT; i++)
-	{
-		drawVertex(i, transform, cols[i], texIndex);
-	}
+	glm::vec4 topleft = glm::vec4(pos, 0.0f, 1.0f);
+	glm::vec4 topRight = glm::vec4(glm::vec2(pos.x + size.x, pos.y), 0.0f, 1.0f);
+	glm::vec4 botRight = glm::vec4(pos + size, 0.0f, 1.0f);
+	glm::vec4 botLeft = glm::vec4(glm::vec2(pos.x, pos.y + size.y), 0.0f, 1.0f);
+
+	drawVertex(0, transform * topleft, cols[0], texIndex);
+	drawVertex(1, transform * topRight, cols[1], texIndex);
+	drawVertex(2, transform * botRight, cols[2], texIndex);
+	drawVertex(3, transform * botLeft, cols[3], texIndex);
+
 	indexCount += 6;
 	quadCount++;
 }
 
+//TODO - Diagonals not entirely working
 void Renderer2D::drawLine(const glm::vec2& start, const glm::vec2& end, const glm::vec4& colour, float thickness)
 {
 	if (needFlush()) flushReset();
+	int texIndex = NO_TEXTURE_INDEX;
 
-	glm::vec2 diff = end - start;
-	float len = glm::length(diff);
-
-	glm::mat4 transformBegin;
-	glm::mat4 transformEnd;
-	if (diff.x == 0)
-	{
-		diff.y = diff.y >= 0 ? len : -len;
-		diff.x = thickness;
-
-		transformBegin = glm::scale(glm::mat4(1.0f), glm::vec3(diff.x, diff.y, 1.0f));
-		transformBegin = glm::translate(glm::mat4(1.0f), glm::vec3(start, 0.0f)) * transformBegin;
-		transformEnd = transformBegin;
-	}
-	else if (diff.y == 0)
-	{
-		diff.x = diff.x >= 0 ? len : -len;
-		diff.y = thickness;
-
-		transformBegin = glm::scale(glm::mat4(1.0f), glm::vec3(diff.x, diff.y, 1.0f));
-		transformBegin = glm::translate(glm::mat4(1.0f), glm::vec3(start, 0.0f)) * transformBegin;
-		transformEnd = transformBegin;
-	}
-	else
-	{
-		transformBegin = glm::scale(glm::mat4(1.0f), glm::vec3(thickness, thickness, 1.0f));
-		transformBegin = glm::translate(glm::mat4(1.0f), glm::vec3(start, 0.0f)) * transformBegin;
-		transformEnd = glm::scale(glm::mat4(1.0f), glm::vec3(thickness, thickness, 1.0f));
-		transformEnd = glm::translate(glm::mat4(1.0f), glm::vec3(end, 0.0f)) * transformEnd;
-	}
-
-	drawVertex(0, transformBegin, colour, NO_TEXTURE_INDEX);
-	drawVertex(1, transformBegin, colour, NO_TEXTURE_INDEX);
-	drawVertex(2, transformEnd, colour, NO_TEXTURE_INDEX);
-	drawVertex(3, transformEnd, colour, NO_TEXTURE_INDEX);
+	glm::vec4 topleft = glm::vec4(start, 0.0f, 1.0f);
+	glm::vec4 topRight = glm::vec4(end, 0.0f, 1.0f);
+	glm::vec4 botRight = glm::vec4(end + glm::vec2(thickness), 0.0f, 1.0f);
+	glm::vec4 botLeft = glm::vec4(start + glm::vec2(thickness), 0.0f, 1.0f);
+	
+	drawVertex(0, topleft, colour, texIndex);
+	drawVertex(1, topRight, colour, texIndex);
+	drawVertex(2, botRight, colour, texIndex);
+	drawVertex(3, botLeft, colour, texIndex);
 
 	indexCount += 6;
 	quadCount++;
@@ -206,14 +195,13 @@ void Renderer2D::init()
 
 glm::mat4 Renderer2D::calculateTransform(const glm::vec2& pos, const glm::vec2& size, float rotation)
 {
-	glm::mat4 transform = glm::scale(glm::mat4(1.0f), glm::vec3(size.x, size.y, 1.0f));
+	glm::mat4 transform = glm::mat4(1.0f);
 	if (rotation != 0.0f)
 	{
-		transform = glm::translate(glm::mat4(1.0f), glm::vec3(-size.x / 2.0f, -size.y / 2.0f, 0.0f)) * transform;
+		transform = glm::translate(glm::mat4(1.0f), glm::vec3(-pos.x - size.x / 2, -pos.y - size.y / 2, 0.0f));
 		transform = glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f)) * transform;
-		transform = glm::translate(glm::mat4(1.0f), glm::vec3(size.x / 2.0f, size.y / 2.0f, 0.0f)) * transform;
+		transform = glm::translate(glm::mat4(1.0f), glm::vec3(pos.x + size.x / 2, pos.y + size.y / 2, 0.0f)) * transform;
 	}
-	transform = glm::translate(glm::mat4(1.0f), glm::vec3(pos.x, pos.y, 0.0f)) * transform;
 	return transform;
 }
 
@@ -233,14 +221,12 @@ int Renderer2D::addTexture(const std::shared_ptr<Texture2D>& texture)
 	return texIndex;
 }
 
-void Renderer2D::drawVertex(const uint32_t num, const glm::mat4& transform, const glm::vec4& colour, int texIndex)
+void Renderer2D::drawVertex(const uint32_t num, const glm::vec4& pos, const glm::vec4& colour, int texIndex)
 {
 											//top left	              //top right	           //bot right		        //bot left
 	constexpr glm::vec2 textureCoords[] = { {0.0f, 1.0f},           {1.0f, 1.0f},             {1.0f, 0.0f} ,            {0.0f, 0.0f} };
-	constexpr glm::vec4 quadCoords[] = { {-0.5f, 1.5f, 0.0f, 1.0f}, {1.5f, 1.5f, 0.0f, 1.0f}, {1.5f, -0.5f, 0.0f, 1.0f}, {-0.5f, -0.5f, 0.0f, 1.0f} };
 
-	//INFO("Vertex {0}: {1}", num, glm::to_string(transform * quadCoords[num]));
-	quadVertexBufferPtr->position = transform * quadCoords[num];
+	quadVertexBufferPtr->position = pos;
 	quadVertexBufferPtr->texIndex = texIndex;
 	quadVertexBufferPtr->texCoord = textureCoords[num];
 	quadVertexBufferPtr->colour = colour;
