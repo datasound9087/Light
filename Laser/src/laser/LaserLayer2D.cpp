@@ -25,13 +25,8 @@ void LaserLayer2D::update()
 
 void LaserLayer2D::render()
 {
-	//renderer->drawRect(glm::vec2(0.0f), glm::vec2(100.0f), colour::COL_WHITE);
-
-	//renderer->drawLine(glm::vec2(200.0f), glm::vec2(250.0f, 200.0f), colour::COL_WHITE);
-	//renderer->drawLine(glm::vec2(250.0f, 200.0f), glm::vec2(250.0f, 250.0f), colour::COL_WHITE);
-
-	//renderer->drawQuad(glm::vec2(200.0f), glm::vec2(10.0f), colour::COL_RED);
-
-	renderer->drawQuad(glm::vec2(630.0f, 0.0f), glm::vec2(5.0f), colour::COL_RED);
-	renderer->drawLine(glm::vec2(630.0f, 10.0f), glm::vec2(400.0f, 10.0f), colour::COL_WHITE);
+	//FIX THIS - COORDINATES NOT CORRECT FOR EACH VERTEX
+	renderer->drawQuad(glm::vec2(0.0f), glm::vec2(100.0f), colour::COL_RED);
+	renderer->drawQuad(glm::vec2(100.0f), glm::vec2(100.0f), colour::COL_GREEN);
+	renderer->drawQuad(glm::vec2(200.0f), glm::vec2(100.0f), colour::COL_BLUE);
 }
