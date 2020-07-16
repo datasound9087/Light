@@ -1,7 +1,7 @@
 #include "lbpch.h"
 #include "App.h"
 #include "lightbulb/event/EventDispatcher.h"
-#include "lightbulb/renderer/RenderCommands.h"
+#include "lightbulb/graphics/RenderCommands.h"
 
 App::App()
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lightbulb/renderer/GraphicsContext.h"
+#include "lightbulb/graphics/GraphicsContext.h"
 
 struct GLFWwindow;
 

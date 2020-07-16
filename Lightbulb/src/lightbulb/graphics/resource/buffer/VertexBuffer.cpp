@@ -1,6 +1,6 @@
 #include "lbpch.h"
 #include "VertexBuffer.h"
-#include "lightbulb/renderer/RendererAPI.h"
+#include "lightbulb/graphics/RendererAPI.h"
 #include "platform/opengl/GLVertexBuffer.h"
 
 std::shared_ptr<VertexBuffer> VertexBuffer::create(const DataTypes::Types& type, size_t size, const Usage& usage)

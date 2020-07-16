@@ -1,7 +1,7 @@
 #pragma once
 #include "Layer.h"
 #include "lightbulb/core/ICamera.h"
-#include "lightbulb/renderer/Renderer2D.h"
+#include "lightbulb/graphics/Renderer2D.h"
 
 class Layer2D : public Layer
 {

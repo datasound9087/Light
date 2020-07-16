@@ -1,7 +1,7 @@
 #pragma once
-#include "lightbulb/renderer/resource/IGPUResource.h"
+#include "lightbulb/graphics/resource/IGPUResource.h"
 #include "BufferLayout.h"
-#include "lightbulb/renderer/DataTypes.h"
+#include "lightbulb/graphics/DataTypes.h"
 
 class VertexBuffer : public IGPUResource
 {

@@ -1,5 +1,5 @@
 #pragma once
-#include "lightbulb/renderer/resource/IGPUResource.h"
+#include "lightbulb/graphics/resource/IGPUResource.h"
 
 class IndexBuffer : public IGPUResource
 {

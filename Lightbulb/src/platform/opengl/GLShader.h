@@ -1,6 +1,6 @@
 #pragma once
 #include <glad/glad.h>
-#include "lightbulb/renderer/resource/shader/Shader.h"
+#include "lightbulb/graphics/resource/shader/Shader.h"
 
 class GLShader : public Shader
 {

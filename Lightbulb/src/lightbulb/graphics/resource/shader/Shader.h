@@ -4,8 +4,8 @@
 #include <glm/vec4.hpp>
 #include <glm/mat4x4.hpp>
 #include <glm/mat3x3.hpp>
-#include "lightbulb/renderer/resource/IGPUResource.h"
-#include "lightbulb/renderer/resource/buffer/BufferLayout.h"
+#include "lightbulb/graphics/resource/IGPUResource.h"
+#include "lightbulb/graphics/resource/buffer/BufferLayout.h"
 
 class Shader : public IGPUResource
 {

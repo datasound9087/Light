@@ -1,6 +1,6 @@
 #pragma once
 #include <glad/glad.h>
-#include "lightbulb/renderer/resource/buffer/IndexBuffer.h"
+#include "lightbulb/graphics/resource/buffer/IndexBuffer.h"
 
 class GLIndexBuffer : public IndexBuffer
 {

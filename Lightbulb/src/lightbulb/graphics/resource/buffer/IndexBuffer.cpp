@@ -1,6 +1,6 @@
 #include "lbpch.h"
 #include "IndexBuffer.h"
-#include "lightbulb/renderer/RendererAPI.h"
+#include "lightbulb/graphics/RendererAPI.h"
 #include "platform/opengl/GLIndexBuffer.h"
 
 std::shared_ptr<IndexBuffer> IndexBuffer::create(uint32_t count, uint32_t* data)

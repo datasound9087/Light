@@ -1,5 +1,5 @@
 #pragma once
-#include "lightbulb/renderer/DataTypes.h"
+#include "lightbulb/graphics/DataTypes.h"
 
 struct BufferElement
 {

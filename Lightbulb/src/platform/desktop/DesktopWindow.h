@@ -3,7 +3,7 @@
 #include "lightbulb/core/Window.h"
 #include <GLFW/glfw3.h>
 
-#include "lightbulb/renderer/GraphicsContext.h"
+#include "lightbulb/graphics/GraphicsContext.h"
 
 class DesktopWindow : public Window
 {

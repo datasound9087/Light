@@ -1,6 +1,6 @@
 #pragma once
 #include <glad/glad.h>
-#include "lightbulb/renderer/resource/buffer/VertexBuffer.h"
+#include "lightbulb/graphics/resource/buffer/VertexBuffer.h"
 
 class GLVertexBuffer : public VertexBuffer
 {

@@ -1,6 +1,6 @@
 #include "lbpch.h"
 #include "Shader.h"
-#include "lightbulb/renderer/RendererAPI.h"
+#include "lightbulb/graphics/RendererAPI.h"
 #include "platform/opengl/GLShader.h"
 
 std::shared_ptr<Shader> Shader::create(const std::string& name, const std::string& path)

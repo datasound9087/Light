@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lightbulb/renderer/RendererAPI.h"
+#include "lightbulb/graphics/RendererAPI.h"
 
 class GLRendererAPI : public RendererAPI
 {
