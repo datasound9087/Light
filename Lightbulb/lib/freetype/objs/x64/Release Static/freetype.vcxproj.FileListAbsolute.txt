@@ -1,1 +1,0 @@
-C:\Users\Sam\source\repos\Light\Lightbulb\lib\freetype\objs\x64\Release Static\freetype.lib

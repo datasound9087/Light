@@ -28,6 +28,7 @@ public:
     void drawQuad(const glm::vec2& pos, const glm::vec2& size, float rotation, const std::array<glm::vec4, 4>& cols);
 
 	void drawLine(const glm::vec2& start, const glm::vec2& end, const glm::vec4& colour, float thickness = DEFAULT_LINE_THICKNESS);
+    void drawLine(const glm::vec2& start, const glm::vec2& end, std::shared_ptr<Texture2D>& texture, float thickness = DEFAULT_LINE_THICKNESS);
     void drawRect(const glm::vec2& pos, const glm::vec2& size, const glm::vec4& colour, float thickness = DEFAULT_LINE_THICKNESS);
 
 	void flush();

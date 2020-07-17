@@ -27,7 +27,7 @@ workspace "Light"
     libIncDir["glm"] = "Lightbulb/lib/glm/include"
     libIncDir["glfw"] = "Lightbulb/lib/glfw/include"
     libIncDir["spdlog"] = "Lightbulb/lib/spdlog/include"
-    libIncDir["freetype"] = "Lightbulb/lib/freetype/include"
+    libIncDir["freetypeTexture"] = "Lightbulb/lib/freetypeTexture/include"
 
     -- project src/lib locations relative to project
     projectSrc = "%{prj.name}/src"
@@ -40,6 +40,7 @@ workspace "Light"
         include "Lightbulb/lib/glm"
         include "Lightbulb/lib/glfw"
         include "Lightbulb/lib/spdlog"
+        include "Lightbulb/lib/freetypeTexture"
     group ""
 
     project "Lightbulb"
@@ -78,7 +79,7 @@ workspace "Light"
             "%{libIncDir.glm}",
             "%{libIncDir.glfw}",
             "%{libIncDir.spdlog}",
-            "%{libIncDir.freetype}"
+            "%{libIncDir.freetypeTexture}",
         }
 
         --libs to link against
@@ -88,7 +89,7 @@ workspace "Light"
             "glad",
             "glfw",
             "spdlog",
-            "Lightbulb/lib/freetype/objs/freetype.lib"
+            "freetypeTexture",
         }
 
         --everything below is windows specific

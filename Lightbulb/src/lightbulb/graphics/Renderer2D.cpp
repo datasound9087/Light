@@ -131,6 +131,31 @@ void Renderer2D::drawLine(const glm::vec2& start, const glm::vec2& end, const gl
 	quadCount++;
 }
 
+void Renderer2D::drawLine(const glm::vec2& start, const glm::vec2& end, std::shared_ptr<Texture2D>& texture, float thickness)
+{
+	if (needFlush()) flushReset();
+
+	int texIndex = NO_TEXTURE_INDEX;
+	if (texture != nullptr)
+	{
+		texIndex = addTexture(texture);
+	}
+
+	glm::vec2 thicknessOffset = glm::vec2(thickness / 2.0f);
+	glm::vec4 topleft = glm::vec4(start - thicknessOffset, 0.0f, 1.0f);
+	glm::vec4 topRight = glm::vec4(end - thicknessOffset, 0.0f, 1.0f);
+	glm::vec4 botRight = glm::vec4(end + thicknessOffset, 0.0f, 1.0f);
+	glm::vec4 botLeft = glm::vec4(start + thicknessOffset, 0.0f, 1.0f);
+
+	drawVertex(0, topleft, glm::vec4(1.0f), texIndex);
+	drawVertex(1, topRight, glm::vec4(1.0f), texIndex);
+	drawVertex(2, botRight, glm::vec4(1.0f), texIndex);
+	drawVertex(3, botLeft, glm::vec4(1.0f), texIndex);
+
+	indexCount += 6;
+	quadCount++;
+}
+
 void Renderer2D::drawRect(const glm::vec2& pos, const glm::vec2& size, const glm::vec4& colour, float thickness)
 {
 	glm::vec2 topRight = glm::vec2(pos.x + size.x, pos.y);
