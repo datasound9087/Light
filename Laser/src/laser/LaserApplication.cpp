@@ -22,4 +22,5 @@ void LaserApplication::init()
 	RenderCommands::setClearColour(glm::vec4(0.0f));
 
 	layerStack->pushLayer(std::make_shared<LaserLayer2D>(window->getWidth(), window->getHeight()));
+	layerStack->setOverlay(std::make_shared<DebugLayer>());
 }

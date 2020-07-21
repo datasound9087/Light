@@ -37,6 +37,8 @@ void LayerStack::onEvent(const std::shared_ptr<event::Event>& evt)
 		auto layer = *it;
 		layer->onLayerEvent(evt);
 	}
+
+	if (overlay != nullptr) overlay->onLayerEvent(evt);
 }
 
 void LayerStack::update()
@@ -47,15 +49,30 @@ void LayerStack::update()
 		auto layer = *it;
 		layer->update();
 	}
+
+	if (overlay != nullptr) overlay->update();
 }
 
 void LayerStack::render()
 {
-	auto it = layerStack.rbegin();
-	for (it; it != layerStack.rend(); it++)
+	auto it = layerStack.begin();
+	for (it; it != layerStack.end(); it++)
 	{
 		auto layer = *it;
 		if(layer->isVisible())
 			layer->renderLayer();
 	}
+
+	if (overlay != nullptr && overlay->isVisible()) overlay->renderLayer();
+}
+
+void LayerStack::setOverlay(const std::shared_ptr<Layer>& overlay)
+{
+	if (this->overlay != nullptr)
+	{
+		overlay->shutdown();
+	}
+
+	this->overlay = overlay;
+	this->overlay->init();
 }
