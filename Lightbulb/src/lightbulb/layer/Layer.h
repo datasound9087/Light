@@ -6,7 +6,7 @@ class Layer
 {
 public:
 	Layer(const std::string& name)
-		: name(name)
+		: name(name), visible(true)
 	{}
 	virtual ~Layer() = default;
 
@@ -27,7 +27,10 @@ public:
 
 	void setName(const std::string& name) { this->name = name; }
 	const std::string& getName()  const { return name; }
+	void setVisible(bool visible) { this->visible = visible; }
+	const bool isVisible() const { return visible; }
 
 protected:
 	std::string name;
+	bool visible;
 };

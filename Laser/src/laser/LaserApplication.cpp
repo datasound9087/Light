@@ -1,10 +1,11 @@
 #include "LaserApplication.h"
 
 #include "LaserLayer2D.h"
+#include "lightbulb/layer/imgui/DebugLayer.h"
 
 std::unique_ptr<App> lightbulb::createApp()
 {
-	return std::make_unique<LaserApplication>();
+	return std::make_unique<LaserApplication>();	
 }
 
 LaserApplication::LaserApplication()

@@ -2,6 +2,9 @@ workspace "Light"
     --x64
     architecture "x86_64"
     startproject "Laser"
+
+    --API_OPENGL, API_DX11, etc
+    rendererApi = "API_OPENGL"
     
     --confingurations wanted
     configurations
@@ -28,6 +31,8 @@ workspace "Light"
     libIncDir["glfw"] = "Lightbulb/lib/glfw/include"
     libIncDir["spdlog"] = "Lightbulb/lib/spdlog/include"
     libIncDir["freetypeTexture"] = "Lightbulb/lib/freetypeTexture/include"
+    libIncDir["imgui"] = "Lightbulb/lib/imgui/include"
+    libIncDir["imgui_backend"] = "Lightbulb/lib/imgui/examples"
 
     -- project src/lib locations relative to project
     projectSrc = "%{prj.name}/src"
@@ -41,6 +46,7 @@ workspace "Light"
         include "Lightbulb/lib/glfw"
         include "Lightbulb/lib/spdlog"
         include "Lightbulb/lib/freetypeTexture"
+        include "Lightbulb/lib/imgui"
     group ""
 
     project "Lightbulb"
@@ -67,7 +73,7 @@ workspace "Light"
         --any defines
         defines
         {
-            
+            rendererApi,
         }
 
         --include dirs
@@ -80,6 +86,8 @@ workspace "Light"
             "%{libIncDir.glfw}",
             "%{libIncDir.spdlog}",
             "%{libIncDir.freetypeTexture}",
+            "%{libIncDir.imgui}",
+            "%{libIncDir.imgui_backend}"
         }
 
         --libs to link against
@@ -90,6 +98,7 @@ workspace "Light"
             "glfw",
             "spdlog",
             "freetypeTexture",
+            "imgui"
         }
 
         --everything below is windows specific
@@ -139,6 +148,11 @@ workspace "Light"
             "Lightbulb/src",
             "%{libIncDir.glm}",
             "%{libIncDir.spdlog}"
+        }
+
+        defines
+        {
+            rendererApi,
         }
 
         links

@@ -1,4 +1,4 @@
---glad dependency
+--glfw dependency
 project "glfw"
     kind "StaticLib"
     language "C"

@@ -3,7 +3,11 @@
 
 #include "platform/opengl/GLRendererAPI.h"
 
-RendererAPI::API RendererAPI::api = RendererAPI::API::OpenGL;
+#ifdef API_OPENGL
+	RendererAPI::API RendererAPI::api = RendererAPI::API::OpenGL;
+#else
+	#error "Not yet supported"
+#endif
 
 std::unique_ptr<RendererAPI> RendererAPI::create()
 {

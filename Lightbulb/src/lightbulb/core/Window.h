@@ -26,7 +26,7 @@ struct WindowProps
 class Window
 {
 public:
-	static std::unique_ptr<Window> create(const WindowProps& props = WindowProps());
+	static std::shared_ptr<Window> create(const WindowProps& props = WindowProps());
 
 	virtual ~Window() = default;
 	virtual void onUpdate() = 0;

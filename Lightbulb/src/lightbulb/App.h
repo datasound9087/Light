@@ -7,10 +7,12 @@
 class App
 {
 public:
+	static const App& getApp() { return *instance; }
 
 	App();
 	virtual ~App() = default;
 	void run();
+	const std::shared_ptr<Window>& getWindow() const { return window; }
 
 protected:
 
@@ -29,13 +31,15 @@ private:
 	void windowResize(const std::shared_ptr<event::WindowResizedEvent>& evt);
 
 protected:
-	std::unique_ptr<Window> window;
+	std::shared_ptr<Window> window;
 	std::shared_ptr<event::EventBuffer> eventHandler;
 
 	std::unique_ptr<LayerStack> layerStack;
 
 private:
 	bool running = true;
+	
+	static App* instance;
 };
 
 namespace lightbulb

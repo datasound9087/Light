@@ -55,6 +55,7 @@ void LayerStack::render()
 	for (it; it != layerStack.rend(); it++)
 	{
 		auto layer = *it;
-		layer->renderLayer();
+		if(layer->isVisible())
+			layer->renderLayer();
 	}
 }

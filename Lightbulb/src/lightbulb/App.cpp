@@ -3,12 +3,16 @@
 #include "lightbulb/event/EventDispatcher.h"
 #include "lightbulb/graphics/RenderCommands.h"
 
+App* App::instance = nullptr;
+
 App::App()
 {
 	INFO("Started");
 	window = Window::create();
 	eventHandler = window->getEventHandler();
 	layerStack = std::make_unique<LayerStack>();
+
+	App::instance = this;
 }
 
 void App::run()
