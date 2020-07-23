@@ -18,4 +18,10 @@ struct TextureFiltering
 	TextureFiltering(const Type& min = Type::Nearest, const Type& max = Type::Linear)
 		: minFilter(min), maxFilter(max)
 	{}
+
+	void setFilters(const Type& type)
+	{
+		minFilter = type;
+		maxFilter = type;
+	}
 };

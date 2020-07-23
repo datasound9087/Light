@@ -5,6 +5,8 @@
 #include <glm/gtx/string_cast.hpp>
 #include <glm/gtx/vector_angle.hpp>
 
+														//top left	  //top right	//bot right		//bot left
+const std::array<const glm::vec2, 4> Renderer2D::DEFAULT_TEXTURE_COORDS = { glm::vec2(0.0f, 1.0f), glm::vec2(1.0f, 1.0f), glm::vec2(1.0f, 0.0f) , glm::vec2(0.0f, 0.0f) };
 const float Renderer2D::DEFAULT_LINE_THICKNESS = 1.0f;
 
 Renderer2D::Renderer2D(const std::shared_ptr<OrthographicCamera> camera)
@@ -75,10 +77,10 @@ void Renderer2D::drawQuad(const glm::vec2& pos, const glm::vec2& size, float rot
 	glm::vec4 botRight = glm::vec4(pos + size, 0.0f, 1.0f);
 	glm::vec4 botLeft = glm::vec4(glm::vec2(pos.x, pos.y + size.y), 0.0f, 1.0f);
 
-	drawVertex(0, transform * topleft, colour, texIndex);
-	drawVertex(1, transform * topRight, colour, texIndex);
-	drawVertex(2, transform * botRight, colour, texIndex);
-	drawVertex(3, transform * botLeft, colour, texIndex);
+	drawVertex(transform * topleft, texIndex, DEFAULT_TEXTURE_COORDS[0], colour);
+	drawVertex(transform * topRight, texIndex, DEFAULT_TEXTURE_COORDS[1], colour);
+	drawVertex(transform * botRight, texIndex, DEFAULT_TEXTURE_COORDS[2], colour);
+	drawVertex(transform * botLeft, texIndex, DEFAULT_TEXTURE_COORDS[3], colour);
 
 	indexCount += 6;
 	quadCount++;
@@ -101,16 +103,15 @@ void Renderer2D::drawQuad(const glm::vec2& pos, const glm::vec2& size, float rot
 	glm::vec4 botRight = glm::vec4(pos + size, 0.0f, 1.0f);
 	glm::vec4 botLeft = glm::vec4(glm::vec2(pos.x, pos.y + size.y), 0.0f, 1.0f);
 
-	drawVertex(0, transform * topleft, cols[0], texIndex);
-	drawVertex(1, transform * topRight, cols[1], texIndex);
-	drawVertex(2, transform * botRight, cols[2], texIndex);
-	drawVertex(3, transform * botLeft, cols[3], texIndex);
+	drawVertex(transform * topleft, texIndex, DEFAULT_TEXTURE_COORDS[0], cols[0]);
+	drawVertex(transform * topRight, texIndex, DEFAULT_TEXTURE_COORDS[1], cols[1]);
+	drawVertex(transform * botRight, texIndex, DEFAULT_TEXTURE_COORDS[2], cols[2]);
+	drawVertex(transform * botLeft, texIndex, DEFAULT_TEXTURE_COORDS[3], cols[3]);
 
 	indexCount += 6;
 	quadCount++;
 }
 
-//TODO - Diagonals not entirely working
 void Renderer2D::drawLine(const glm::vec2& start, const glm::vec2& end, const glm::vec4& colour, float thickness)
 {
 	if (needFlush()) flushReset();
@@ -122,10 +123,10 @@ void Renderer2D::drawLine(const glm::vec2& start, const glm::vec2& end, const gl
 	glm::vec4 botRight = glm::vec4(end + thicknessOffset, 0.0f, 1.0f);
 	glm::vec4 botLeft = glm::vec4(start + thicknessOffset, 0.0f, 1.0f);
 	
-	drawVertex(0, topleft, colour, texIndex);
-	drawVertex(1, topRight, colour, texIndex);
-	drawVertex(2, botRight, colour, texIndex);
-	drawVertex(3, botLeft, colour, texIndex);
+	drawVertex(topleft, texIndex, DEFAULT_TEXTURE_COORDS[0], colour);
+	drawVertex(topRight, texIndex, DEFAULT_TEXTURE_COORDS[1], colour);
+	drawVertex(botRight, texIndex, DEFAULT_TEXTURE_COORDS[2], colour);
+	drawVertex(botLeft, texIndex, DEFAULT_TEXTURE_COORDS[3], colour);
 
 	indexCount += 6;
 	quadCount++;
@@ -147,10 +148,11 @@ void Renderer2D::drawLine(const glm::vec2& start, const glm::vec2& end, std::sha
 	glm::vec4 botRight = glm::vec4(end + thicknessOffset, 0.0f, 1.0f);
 	glm::vec4 botLeft = glm::vec4(start + thicknessOffset, 0.0f, 1.0f);
 
-	drawVertex(0, topleft, glm::vec4(1.0f), texIndex);
-	drawVertex(1, topRight, glm::vec4(1.0f), texIndex);
-	drawVertex(2, botRight, glm::vec4(1.0f), texIndex);
-	drawVertex(3, botLeft, glm::vec4(1.0f), texIndex);
+	const glm::vec4 WHITE(1.0f);
+	drawVertex(topleft, texIndex, DEFAULT_TEXTURE_COORDS[0], WHITE);
+	drawVertex(topRight, texIndex, DEFAULT_TEXTURE_COORDS[1], WHITE);
+	drawVertex(botRight, texIndex, DEFAULT_TEXTURE_COORDS[2], WHITE);
+	drawVertex(botLeft, texIndex, DEFAULT_TEXTURE_COORDS[3], WHITE);
 
 	indexCount += 6;
 	quadCount++;
@@ -166,6 +168,45 @@ void Renderer2D::drawRect(const glm::vec2& pos, const glm::vec2& size, const glm
 	drawLine(topRight, botRight, colour, thickness);
 	drawLine(botRight, botLeft, colour, thickness);
 	drawLine(botLeft, pos, colour, thickness);
+}
+
+void Renderer2D::drawString(const glm::vec2& pos, const std::string& text, const glm::vec4& colour)
+{
+	if (font == nullptr)
+	{
+		ERROR("Renderer2D: No set Font");
+		return;
+	}
+
+	float texIndex = addTexture(font->getAtlas());
+
+	float posOffsetX = pos.x;
+	float posOffsetY = pos.y;
+	for (const auto& character : text)
+	{
+		Glyph glyph = font->getGlyph(character);
+
+		glm::vec4 topleft = glm::vec4(posOffsetX, (posOffsetY - glyph.bearing.y), 0.0f, 1.0f);
+		glm::vec4 topRight = glm::vec4(posOffsetX + glyph.size.x, (posOffsetY - glyph.bearing.y), 0.0f, 1.0f);
+		glm::vec4 botRight = glm::vec4(posOffsetX + glyph.size.x, (posOffsetY - glyph.bearing.y) + glyph.size.y, 0.0f, 1.0f);
+		glm::vec4 botLeft = glm::vec4(posOffsetX, (posOffsetY - glyph.bearing.y) + glyph.size.y, 0.0f, 1.0f);
+
+		drawVertex(topleft, texIndex, glyph.texCoord[0], colour);
+		drawVertex(topRight, texIndex, glyph.texCoord[1], colour);
+		drawVertex(botRight, texIndex, glyph.texCoord[2], colour);
+		drawVertex(botLeft, texIndex, glyph.texCoord[3], colour);
+
+		indexCount += 6;
+		quadCount++;
+
+		posOffsetX += glyph.advance.x;
+		posOffsetY += glyph.advance.y;
+	}
+}
+
+void Renderer2D::drawString(const glm::vec2& pos, const std::string& text)
+{
+	drawString(pos, text, glm::vec4(1.0f));
 }
 
 void Renderer2D::flush()
@@ -192,7 +233,10 @@ void Renderer2D::init()
 	});
 
 	quadVertexBuffer = std::make_unique<std::array<VertexData, MAX_VERTICIES>>();
-	shader = Shader::create("Renderer2D", RENDERER_2D_SHADER_SRC, false);
+
+	if(RendererAPI::getAPI() == RendererAPI::API::OpenGL)
+		shader = Shader::create("Renderer2D", RENDERER_2D_SHADER_SRC_GL, false);
+
 	shader->setLayout(vertBuffer->getLayout());
 
 	int32_t samplers[MAX_TEXTURES];
@@ -247,14 +291,11 @@ int Renderer2D::addTexture(const std::shared_ptr<Texture2D>& texture)
 	return texIndex;
 }
 
-void Renderer2D::drawVertex(const uint32_t num, const glm::vec4& pos, const glm::vec4& colour, int texIndex)
+void Renderer2D::drawVertex(const glm::vec4& pos, int texIndex, const glm::vec2& texCoord, const glm::vec4& colour)
 {
-											//top left	              //top right	           //bot right		        //bot left
-	constexpr glm::vec2 textureCoords[] = { {0.0f, 1.0f},           {1.0f, 1.0f},             {1.0f, 0.0f} ,            {0.0f, 0.0f} };
-
 	quadVertexBufferPtr->position = pos;
 	quadVertexBufferPtr->texIndex = texIndex;
-	quadVertexBufferPtr->texCoord = textureCoords[num];
+	quadVertexBufferPtr->texCoord = texCoord;
 	quadVertexBufferPtr->colour = colour;
 	quadVertexBufferPtr++;
 }

@@ -7,6 +7,7 @@ class GLTexture2D : public Texture2D
 public:
 	GLTexture2D(const std::string& name, const std::string& path, bool flipOnLoad, const TextureProps& props);
 	GLTexture2D(const std::string& name, int width, int height, const TextureProps& props);
+	GLTexture2D(const std::string& name, int width, int height, unsigned char* data, const TextureProps& props);
 	virtual ~GLTexture2D();
 
 	void bind(const uint32_t slot) override;
@@ -14,7 +15,7 @@ public:
 
 private:
 	unsigned char* readFromFile(const std::string& path, bool flipOnLoad);
-	void createTexture(unsigned char* data = nullptr);
+	void createTexture(unsigned char* data = nullptr, bool free = false);
 	void setTextureFormatFromFile(int numChannels);
 
 	GLenum getGLTextureWrapMode(const TextureWrapping::Type& wrapping);

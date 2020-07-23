@@ -612,9 +612,9 @@ cleanup_stroker:
 
     if( self->rendermode == RENDER_SIGNED_DISTANCE_FIELD )
     {
-        unsigned char *sdf = make_distance_mapb( buffer, tgt_w, tgt_h );
-        free( buffer );
-        buffer = sdf;
+        //unsigned char *sdf = make_distance_mapb( buffer, tgt_w, tgt_h );
+        //free( buffer );
+        //buffer = sdf;
     }
 
     texture_atlas_set_region( self->atlas, x, y, tgt_w, tgt_h, buffer, tgt_w * self->atlas->depth);

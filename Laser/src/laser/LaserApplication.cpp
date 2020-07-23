@@ -2,6 +2,7 @@
 
 #include "LaserLayer2D.h"
 #include "lightbulb/layer/imgui/DebugLayer.h"
+#include "lightbulb/graphics/text/Font.h"
 
 std::unique_ptr<App> lightbulb::createApp()
 {

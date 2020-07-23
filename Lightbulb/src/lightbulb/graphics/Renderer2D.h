@@ -7,6 +7,7 @@
 #include "resource/buffer/IndexBuffer.h"
 #include "resource/shader/Shader.h"
 #include "lightbulb/core/OrthographicCamera.h"
+#include "lightbulb/graphics/text/Font.h"
 
 class Renderer2D
 {
@@ -31,6 +32,11 @@ public:
     void drawLine(const glm::vec2& start, const glm::vec2& end, std::shared_ptr<Texture2D>& texture, float thickness = DEFAULT_LINE_THICKNESS);
     void drawRect(const glm::vec2& pos, const glm::vec2& size, const glm::vec4& colour, float thickness = DEFAULT_LINE_THICKNESS);
 
+    const std::shared_ptr<Font>& getFont() const { return font; }
+    void setFont(const std::shared_ptr<Font>& font) { this->font = font; }
+    void drawString(const glm::vec2& pos, const std::string& text, const glm::vec4& colour);
+    void drawString(const glm::vec2& pos, const std::string& text);
+
 	void flush();
 
 public:
@@ -45,15 +51,18 @@ private:
 	void init();
     glm::mat4 calculateTransform(const glm::vec2& pos, const glm::vec2& size, float rotation);
     int addTexture(const std::shared_ptr<Texture2D>& texture);
-    void drawVertex(const uint32_t num, const glm::vec4& pos, const glm::vec4& colour, int texIndex);
+    void drawVertex(const glm::vec4& pos, int texIndex, const glm::vec2& texCoord, const glm::vec4& colour);
     bool needFlush();
     void flushReset();
 	void shutdown();
 
 private:
+   
+    static const std::array<const glm::vec2, 4> DEFAULT_TEXTURE_COORDS;
     static const int32_t NO_TEXTURE_INDEX = -1;
 
     std::shared_ptr<OrthographicCamera> camera;
+    std::shared_ptr<Font> font;
 
 	std::shared_ptr<VertexBuffer> vertBuffer;
 	std::shared_ptr<IndexBuffer> indexBuffer;
@@ -76,7 +85,7 @@ private:
 	std::unique_ptr<std::array<VertexData, MAX_VERTICIES>> quadVertexBuffer;
     VertexData* quadVertexBufferPtr;
 
-    const std::string RENDERER_2D_SHADER_SRC =
+    const std::string RENDERER_2D_SHADER_SRC_GL =
         "#type vertex\n"
         "#version 450 core\n"
         "layout(location = 0) in vec2 position;\n"

@@ -12,7 +12,7 @@ GLTexture2D::GLTexture2D(const std::string& name, const std::string& path, bool 
 	this->props = props;
 
 	unsigned char* data = readFromFile(path, flipOnLoad);
-	createTexture(data);
+	createTexture(data, true);
 }
 
 GLTexture2D::GLTexture2D(const std::string& name, int width, int height, const TextureProps& props)
@@ -23,6 +23,16 @@ GLTexture2D::GLTexture2D(const std::string& name, int width, int height, const T
 	this->height = height;
 
 	createTexture();
+}
+
+GLTexture2D::GLTexture2D(const std::string& name, int width, int height, unsigned char* data, const TextureProps& props)
+{
+	this->name = name;
+	this->props = props;
+	this->width = width;
+	this->height = height;
+
+	createTexture(data);
 }
 
 GLTexture2D::~GLTexture2D()
@@ -61,7 +71,7 @@ unsigned char* GLTexture2D::readFromFile(const std::string& path, bool flipOnLoa
 	return data;
 }
 
-void GLTexture2D::createTexture(unsigned char* data)
+void GLTexture2D::createTexture(unsigned char* data, bool free)
 {
 	glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_2D, id);
@@ -74,13 +84,22 @@ void GLTexture2D::createTexture(unsigned char* data)
 	if (props.wrapping.type == TextureWrapping::Type::ClampBorder)
 		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, glm::value_ptr(props.wrapping.borderCol));
 
+	if (props.format.format == TextureFormat::Type::RED)
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+	if (props.mask.type == TextureMasking::Type::SwizzleRedAlpha)
+	{
+		GLint swizzleMask[] = { GL_ONE, GL_ONE, GL_ONE, GL_RED };
+		glTexParameterIiv(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_RGBA, swizzleMask);
+	}
+
 	glTexImage2D(GL_TEXTURE_2D, 0, getGLTextureFormatMode(props.format.internalFormat), width, height, 0,
 		getGLTextureFormatMode(props.format.format), GL_UNSIGNED_BYTE, data);
 
 	if (props.genMipmaps)
 		glGenerateMipmap(GL_TEXTURE_2D);
 
-	if (data != nullptr)
+	if (free)
 		stbi_image_free(data);
 }
 
