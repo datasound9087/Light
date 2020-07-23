@@ -11,9 +11,5 @@ public:
 	void init() override;
 	void update() override;
 	void render() override;
-
-private:
-	std::shared_ptr<Texture2D> test;
-	std::shared_ptr<Texture2D> test2;
 };
 

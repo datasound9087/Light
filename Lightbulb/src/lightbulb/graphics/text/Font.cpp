@@ -5,7 +5,7 @@
 
 const std::string Font::LOCALE_EN = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const std::string Font::NUMBERS = "1234567890";
-const std::string Font::SYMBOLS = "-=!\"£$%^&*()_+\\|`¬[]{};'#:@~,./<>?";
+const std::string Font::SYMBOLS = "-=!\"£$%^&*()_+\\ |`¬[]{};'#:@~,./<>?";
 
 std::shared_ptr<Font> Font::create(const std::string& fontFile, uint32_t size, const std::string& locale)
 {
@@ -15,6 +15,9 @@ std::shared_ptr<Font> Font::create(const std::string& fontFile, uint32_t size, c
 Font::Font(const std::string& fontFile, uint32_t size, const std::string& locale)
 	: size(size)
 {
+	std::string name = fontFile;
+	std::replace(name.begin(), name.end(), '/', '\\');
+	this->name = name.substr(name.find_last_of("\\") + 1) + "-" + std::to_string(size);
 	init(fontFile, size, locale);
 }
 

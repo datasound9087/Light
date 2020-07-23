@@ -9,7 +9,7 @@
 const std::array<const glm::vec2, 4> Renderer2D::DEFAULT_TEXTURE_COORDS = { glm::vec2(0.0f, 1.0f), glm::vec2(1.0f, 1.0f), glm::vec2(1.0f, 0.0f) , glm::vec2(0.0f, 0.0f) };
 const float Renderer2D::DEFAULT_LINE_THICKNESS = 1.0f;
 
-Renderer2D::Renderer2D(const std::shared_ptr<OrthographicCamera> camera)
+Renderer2D::Renderer2D(const std::shared_ptr<ICamera> camera)
 	: camera(camera)
 {
 	init();
@@ -20,7 +20,7 @@ Renderer2D::~Renderer2D()
 	shutdown();
 }
 
-void Renderer2D::setCamera(const std::shared_ptr<OrthographicCamera>& camera)
+void Renderer2D::setCamera(const std::shared_ptr<ICamera>& camera)
 {
 	this->camera = camera;
 }

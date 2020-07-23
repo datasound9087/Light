@@ -1,6 +1,6 @@
 #pragma once
 #include "Layer.h"
-#include "lightbulb/core/ICamera.h"
+#include "lightbulb/core/OrthographicCamera.h"
 #include "lightbulb/graphics/Renderer2D.h"
 
 class Layer2D : public Layer

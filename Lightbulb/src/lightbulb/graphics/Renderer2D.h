@@ -6,15 +6,15 @@
 #include "resource/buffer/VertexBuffer.h"
 #include "resource/buffer/IndexBuffer.h"
 #include "resource/shader/Shader.h"
-#include "lightbulb/core/OrthographicCamera.h"
+#include "lightbulb/core/ICamera.h"
 #include "lightbulb/graphics/text/Font.h"
 
 class Renderer2D
 {
 public:
-	Renderer2D(const std::shared_ptr<OrthographicCamera> camera);
+	Renderer2D(const std::shared_ptr<ICamera> camera);
 	~Renderer2D();
-	void setCamera(const std::shared_ptr<OrthographicCamera>& camera);
+	void setCamera(const std::shared_ptr<ICamera>& camera);
 
 	void beginScene();
 	void endScene();
@@ -61,7 +61,7 @@ private:
     static const std::array<const glm::vec2, 4> DEFAULT_TEXTURE_COORDS;
     static const int32_t NO_TEXTURE_INDEX = -1;
 
-    std::shared_ptr<OrthographicCamera> camera;
+    std::shared_ptr<ICamera> camera;
     std::shared_ptr<Font> font;
 
 	std::shared_ptr<VertexBuffer> vertBuffer;
@@ -120,7 +120,7 @@ private:
         "{\n"
         "    fragColour = fragInfo.colour;\n"
         "    if(fragInfo.texIndex >= 0) fragColour *= texture(textureSamplers[int(fragInfo.texIndex)],  fragInfo.texCoord);\n"
-        "    if(fragColour.a < 0.1) discard;\n"
+        "    if(fragColour.a < 0.004) discard;\n"
         "}\n";
 };
 
