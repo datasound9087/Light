@@ -15,6 +15,7 @@ LaserLayer2D::~LaserLayer2D()
 void LaserLayer2D::init()
 {
 	renderer->setFont(Font::create("C:\\Users\\Sam\\source\\repos\\Light\\Laser\\assets\\fonts\\Arial.ttf", 28));
+	test = Texture2D::create("testAlpha", "C:\\Users\\Sam\\source\\repos\\Light\\test.png");
 }
 
 void LaserLayer2D::update()
@@ -44,6 +45,5 @@ void LaserLayer2D::render()
 	renderer->drawRect(glm::vec2(500.0f, 20.0f), glm::vec2(30.0f), colour::COL_WHITE);
 	renderer->drawQuad(glm::vec2(0.0f, 200.0f), glm::vec2(400.0f), colour::COL_BLUE);
 	renderer->drawString(glm::vec2(0.0f, 300.0f), "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-
-	//renderer->drawQuad(glm::vec2(0.0f, 350.0f), glm::vec2(640.0f, 480.0f), renderer->getFont()->getAtlas());
+	renderer->drawQuad(glm::vec2(0.0f), glm::vec2(300.0f), test);
 }

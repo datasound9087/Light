@@ -77,7 +77,7 @@ private:
 	struct VertexData
 	{
 		glm::vec2 position;
-		int texIndex;
+		float texIndex;
 		glm::vec2 texCoord;
 		glm::vec4 colour;
 	};
@@ -89,12 +89,12 @@ private:
         "#type vertex\n"
         "#version 450 core\n"
         "layout(location = 0) in vec2 position;\n"
-        "layout(location = 1) in int texIndex;\n"
+        "layout(location = 1) in float texIndex;\n"
         "layout(location = 2) in vec2 texCoord;\n"
         "layout(location = 3) in vec4 colour;\n"
         "out FRAG_INFO\n"
         "{\n"
-        "    flat int texIndex;\n"
+        "    float texIndex;\n"
         "    vec2 texCoord;\n"
         "    vec4 colour;\n"
         "} fragInfo;\n"
@@ -110,7 +110,7 @@ private:
         "#version 450 core\n"
         "in FRAG_INFO\n"
         "{\n"
-        "    flat int texIndex;\n"
+        "    float texIndex;\n"
         "    vec2 texCoord;\n"
         "    vec4 colour;\n"
         "} fragInfo;\n"
@@ -119,7 +119,8 @@ private:
         "void main()\n"
         "{\n"
         "    fragColour = fragInfo.colour;\n"
-        "    if(fragInfo.texIndex >= 0) fragColour *= texture(textureSamplers[fragInfo.texIndex],  fragInfo.texCoord);\n"
+        "    if(fragInfo.texIndex >= 0) fragColour *= texture(textureSamplers[int(fragInfo.texIndex)],  fragInfo.texCoord);\n"
+        "    if(fragColour.a < 0.1) discard;\n"
         "}\n";
 };
 

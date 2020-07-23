@@ -42,7 +42,7 @@ GLTexture2D::~GLTexture2D()
 
 void GLTexture2D::bind(const uint32_t slot)
 {
-	glActiveTexture(slot);
+	glActiveTexture(GL_TEXTURE0 + slot);
 	glBindTexture(GL_TEXTURE_2D, id);
 }
 
@@ -60,7 +60,7 @@ unsigned char* GLTexture2D::readFromFile(const std::string& path, bool flipOnLoa
 
 	if (!data)
 	{
-		ERROR("Failed to load image: {9}", path);
+		ERROR("Failed to load image: {0}", path);
 		return nullptr;
 	}
 

@@ -172,6 +172,8 @@ void Renderer2D::drawRect(const glm::vec2& pos, const glm::vec2& size, const glm
 
 void Renderer2D::drawString(const glm::vec2& pos, const std::string& text, const glm::vec4& colour)
 {
+	if (needFlush()) flushReset();
+
 	if (font == nullptr)
 	{
 		ERROR("Renderer2D: No set Font");
@@ -227,7 +229,7 @@ void Renderer2D::init()
 	vertBuffer->setBufferLayout(
 	{
 		{"position", DataTypes::Types::Float2},
-		{"texIndex", DataTypes::Types::Int},
+		{"texIndex", DataTypes::Types::Float},
 		{"texCoord", DataTypes::Types::Float2},
 		{"colour", DataTypes::Types::Float4}
 	});
