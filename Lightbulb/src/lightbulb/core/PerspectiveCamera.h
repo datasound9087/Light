@@ -9,6 +9,5 @@ public:
 	PerspectiveCamera(float fov, float aspectRatio);
 	PerspectiveCamera(float fov, uint32_t width, uint32_t height);
 	virtual ~PerspectiveCamera();
-	virtual const glm::mat4& getViewProjMatrix() const override;
 };
 

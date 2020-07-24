@@ -4,7 +4,7 @@
 
 //values from glfw3.h
 
-namespace input::keys
+namespace input
 {
 	/* The unknown key */
 	constexpr int KEY_UNKNOWN = -1;

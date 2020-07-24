@@ -1,7 +1,7 @@
 #pragma once
 
 //from glfw3.h
-namespace input::keys
+namespace input
 {
 	constexpr unsigned char KEY_MOD_SHIFT = 0x0001;
 	constexpr unsigned char KEY_MOD_CONTROL = 0x0002;

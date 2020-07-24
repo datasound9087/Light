@@ -3,7 +3,7 @@
 #include "KeyModifiers.h"
 
 //from glfw3.h
-namespace input::mouse
+namespace input
 {
 	constexpr int MOUSE_BUTTON_1 = 0;
 	constexpr int MOUSE_BUTTON_2 = 1;

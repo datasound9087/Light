@@ -183,3 +183,62 @@ workspace "Light"
             defines "CONFIG_DIST"
             runtime "Release"
             optimize "on"
+
+    project "CubeLight"
+        location "CubeLight"
+        kind "ConsoleApp"
+        language "C++"
+        cppdialect "C++17"
+        staticruntime "on"
+
+        targetdir ("bin/" .. outputDir .. "/%{prj.name}")
+        objdir ("bin-int/" .. outputDir .. "/%{prj.name}")
+
+        files
+        {
+            projectSrc .. "/**.h",
+            projectSrc .. "/**.cpp",
+        }
+
+        includedirs
+        {
+            "Lightbulb/src",
+            "%{libIncDir.glm}",
+            "%{libIncDir.spdlog}"
+        }
+
+        defines
+        {
+            rendererApi,
+        }
+
+        links
+        {
+            "Lightbulb",
+            "spdlog"
+        }
+
+        filter "system:windows"
+            systemversion "latest"
+
+            defines
+            {
+                "PLATFORM_WINDOWS"
+            }
+		
+        filter "configurations:Debug"
+            defines "CONFIG_DEBUG"
+            runtime "Debug"
+            symbols "on"
+
+        filter "configurations:Release"
+            defines "CONFIG_RELEASE"
+            runtime "Release"
+            optimize "on"
+
+        filter "configurations:Dist"
+            defines "CONFIG_DIST"
+            runtime "Release"
+            optimize "on"
+
+            
