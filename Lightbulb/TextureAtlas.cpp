@@ -18,9 +18,8 @@ const std::array<glm::vec2, 4> TextureAtlas::getCoordsOf(const std::string& name
 	if (layout.elements.count(name) == 0)
 	{
 		ERROR("Cannot find {0} in AtlsLayout", name);
-		return;
 	}
-	return layout.elements[name].texCoords;
+	return layout.elements.at(name).texCoords;
 }
 
 void TextureAtlas::calcTexCoords()

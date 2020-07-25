@@ -13,7 +13,7 @@ struct AtlasLayout
 			ERROR("Cannot find {0} in AtlsLayout", name);
 			return;
 		}
-		elements[name] = elem;
+		elements.emplace(name, elem);
 	}
 
 	void addCubeElements(const std::string& name, glm::ivec2 position, glm::ivec2 size)
