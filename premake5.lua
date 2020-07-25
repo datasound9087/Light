@@ -145,6 +145,7 @@ workspace "Light"
 
         includedirs
         {
+            projectSrc,
             "Lightbulb/src",
             "%{libIncDir.glm}",
             "%{libIncDir.spdlog}"
@@ -202,6 +203,7 @@ workspace "Light"
 
         includedirs
         {
+            projectSrc,
             "Lightbulb/src",
             "%{libIncDir.glm}",
             "%{libIncDir.spdlog}"

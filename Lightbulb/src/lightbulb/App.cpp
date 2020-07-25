@@ -12,6 +12,9 @@ App::App()
 	eventHandler = window->getEventHandler();
 	layerStack = std::make_unique<LayerStack>();
 
+	RenderCommands::setViewport(0, 0, 640, 480);
+	RenderCommands::setClearColour(glm::vec4(0.0f));
+
 	App::instance = this;
 }
 

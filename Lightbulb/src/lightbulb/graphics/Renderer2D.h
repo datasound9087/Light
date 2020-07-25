@@ -120,7 +120,7 @@ private:
         "{\n"
         "    fragColour = fragInfo.colour;\n"
         "    if(fragInfo.texIndex >= 0) fragColour *= texture(textureSamplers[int(fragInfo.texIndex)],  fragInfo.texCoord);\n"
-        "    if(fragColour.a < 0.004) discard;\n"
+        "    if(fragColour.a == 0) discard;\n"
         "}\n";
 };
 
