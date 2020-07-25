@@ -6,7 +6,7 @@
 #include "resource/buffer/VertexBuffer.h"
 #include "resource/buffer/IndexBuffer.h"
 #include "resource/shader/Shader.h"
-#include "lightbulb/core/ICamera.h"
+#include "lightbulb/camera/ICamera.h"
 #include "lightbulb/graphics/text/Font.h"
 
 class Renderer2D

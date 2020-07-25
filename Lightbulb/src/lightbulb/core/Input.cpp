@@ -2,7 +2,7 @@
 #include "Input.h"
 
 #ifdef API_OPENGL
-	#include "DesktopInput.h"
+	#include "platform/desktop/DesktopInput.h"
 #endif
 
 bool Input::isKeyPressed(int key)

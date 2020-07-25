@@ -1,5 +1,5 @@
 #include "LaserLayer2D.h"
-#include "lightbulb/core/OrthographicCamera.h"
+#include "lightbulb/camera/OrthographicCamera.h"
 #include "lightbulb/graphics/Colour.h"
 #include "lightbulb/event/EventDispatcher.h"
 
