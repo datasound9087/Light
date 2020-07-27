@@ -15,7 +15,3 @@ std::shared_ptr<FrameBuffer> FrameBuffer::create(const FrameBufferProps& props)
 		return std::make_shared<GLFrameBuffer>(props);
 	}
 }
-
-FrameBuffer::FrameBuffer()
-{
-}

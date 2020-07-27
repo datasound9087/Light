@@ -21,14 +21,40 @@ App::App()
 void App::run()
 {
 	init();
+
+	double previous = window->getWindowTime();
+	double acumulator = 0.0;
+	double timeCounter = 0.0;
 	while (running)
 	{
+		double current = window->getWindowTime();
+		double elapsed = current - previous;
+		previous = current;
+		acumulator += elapsed;
+		timeCounter += elapsed;
+
 		window->onUpdate();
-		handleEvents();
-		layerStack->update();
-		update();
+		while (acumulator >= 1.0)
+		{
+			handleEvents();
+			layerStack->update();
+			update();
+			acumulator -= secondsPerUPS;
+			ups++;
+		}
+
+		if (timeCounter >= 1.0)
+		{
+			layerStack->tick();
+			tick();
+			timeCounter = 0.0;
+			ups = 0;
+			fps = 0;
+		}
+		
 		layerStack->render();
 		render();
+		fps++;
 	}
 
 	shutdown();
@@ -37,6 +63,12 @@ void App::run()
 #if CONFIG_DEBUG
 	window->shutdown();
 #endif
+}
+
+void App::setTargetUPS(uint32_t ups)
+{
+	targetUPS = ups;
+	secondsPerUPS = 1.0 / (double)targetUPS;
 }
 
 void App::handleEvents()

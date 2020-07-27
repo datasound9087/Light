@@ -18,6 +18,8 @@ public:
 	virtual void onLayerEvent(const std::shared_ptr<event::Event>& evt) {}
 	//updates
 	virtual void layerUpdate() = 0;
+	//tick (once per second)
+	virtual void layerTick() {}
 	//render
 	virtual void renderLayer() = 0;
 	//on move back in layer stack

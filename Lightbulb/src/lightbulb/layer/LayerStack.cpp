@@ -53,6 +53,18 @@ void LayerStack::update()
 	if (overlay != nullptr) overlay->layerUpdate();
 }
 
+void LayerStack::tick()
+{
+	auto it = layerStack.rbegin();
+	for (it; it != layerStack.rend(); it++)
+	{
+		auto layer = *it;
+		layer->layerTick();
+	}
+
+	if (overlay != nullptr) overlay->layerTick();
+}
+
 void LayerStack::render()
 {
 	auto it = layerStack.begin();

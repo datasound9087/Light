@@ -7,6 +7,9 @@
 class App
 {
 public:
+	static const uint32_t DEFAULT_UPS = 60;
+
+public:
 	static const App& getApp() { return *instance; }
 
 	App();
@@ -14,10 +17,17 @@ public:
 	void run();
 	const std::shared_ptr<Window>& getWindow() const { return window; }
 
+	uint32_t getTargetUPS() const { return targetUPS; }
+	void setTargetUPS(uint32_t ups);
+
+	double getCurrentUPS() const { return ups; }
+	double getCurrentFPS() const { return fps; }
+
 protected:
 
 	virtual void init() {}
 	virtual void update() {}
+	virtual void tick() {}
 	virtual void render() {}
 	virtual void onEvent(const std::shared_ptr<event::Event>& event) {}
 	virtual void windowClosing() {}
@@ -38,7 +48,12 @@ protected:
 
 private:
 	bool running = true;
-	
+	uint32_t targetUPS = DEFAULT_UPS;
+	double secondsPerUPS = 1.0 / (double)targetUPS;
+
+	double ups = 0;
+	double fps = 0;
+
 	static App* instance;
 };
 

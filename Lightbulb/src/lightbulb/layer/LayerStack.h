@@ -11,6 +11,7 @@ public:
 	void pop();
 	void onEvent(const std::shared_ptr<event::Event>& evt);
 	void update();
+	void tick();
 	void render();
 
 	std::shared_ptr<Layer>& getOverlay() { return overlay; }
