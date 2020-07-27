@@ -39,6 +39,8 @@ public:
 
 	void flush();
 
+    const std::shared_ptr<ICamera>& getCamera() const { return camera; }
+
 public:
     static const uint32_t MAX_QUADS = 20000;
     static const uint32_t MAX_VERTICIES = MAX_QUADS * 4;

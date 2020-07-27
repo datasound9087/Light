@@ -13,20 +13,21 @@ public:
 	static const float DEFAULT_ZOOM_LEVEL_MAX;
 
 public:
-	ICamera(const glm::mat4& projMatrix)
-		: projMatrix(projMatrix), worldUp(glm::vec3(0.0f, 1.0f, 0.0f)), up(worldUp)
+	ICamera(const glm::mat4& projMatrix, float aspectRatio, float zNear, float zFar)
+		: projMatrix(projMatrix), worldUp(glm::vec3(0.0f, 1.0f, 0.0f)), up(worldUp), aspectRatio(aspectRatio), zNear(zNear), zFar(zFar)
 	{
 		update();
 	}
 
-	ICamera(const glm::mat4& projMatrix, const glm::vec3& position)
-		: projMatrix(projMatrix), position(position), worldUp(glm::vec3(0.0f, 1.0f, 0.0f)), up(worldUp)
+	ICamera(const glm::mat4& projMatrix, const glm::vec3& position, float aspectRatio, float zNear, float zFar)
+		: projMatrix(projMatrix), position(position), worldUp(glm::vec3(0.0f, 1.0f, 0.0f)), aspectRatio(aspectRatio), up(worldUp), zNear(zNear), zFar(zFar)
 	{
 		update();
 	}
 
 	virtual ~ICamera() = default;
 	void update();
+	virtual void onResize(int width, int height) = 0;
 
 	const glm::mat4& getViewProjMatrix() const { return projViewMatrix; }
 	const glm::mat4& getViewMatrix() const { return viewMatrix; };
@@ -57,9 +58,18 @@ public:
 	float getMaxZoom() const { return maxZoom; }
 	void setMaxZoom(float pitch) { this->maxZoom = maxZoom; }
 
-	float getZoom() { return zoom; }
-	virtual void setZoom(float zoom);
+	float getZoom() const { return zoom; }
+	void setZoom(float zoom);
 	void resetZoom() { setZoom(DEFAULT_ZOOM_LEVEL); }
+
+	float getNear() const { return zNear; }
+	void setNear(float zNear) { this->zNear = zNear; }
+
+	float getFar() const { return zFar; }
+	void setFar(float zFar) { this->zFar = zFar; }
+
+	float getAspectRatio() const { return aspectRatio; }
+	void setAspectRatio(float aspectRatio) { this->aspectRatio = aspectRatio; }
 
 protected:
 	void updateProjViewMatrix();
@@ -83,4 +93,8 @@ protected:
 	glm::vec3 up;
 	glm::vec3 right;
 	glm::vec3 worldUp;
+
+	float zNear;
+	float zFar;
+	float aspectRatio;
 };

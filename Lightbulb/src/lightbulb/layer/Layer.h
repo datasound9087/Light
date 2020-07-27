@@ -17,7 +17,7 @@ public:
 	//events
 	virtual void onLayerEvent(const std::shared_ptr<event::Event>& evt) {}
 	//updates
-	virtual void update() = 0;
+	virtual void layerUpdate() = 0;
 	//render
 	virtual void renderLayer() = 0;
 	//on move back in layer stack

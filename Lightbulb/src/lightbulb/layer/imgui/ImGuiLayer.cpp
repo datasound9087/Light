@@ -30,10 +30,6 @@ void ImGuiLayer::onLayerEvent(const std::shared_ptr<event::Event>& evt)
 	}
 }
 
-void ImGuiLayer::update()
-{
-}
-
 void ImGuiLayer::renderLayer()
 {
 	imguiBuild::begin();

@@ -22,10 +22,10 @@ void ICamera::move(const Direction& direction, float amount)
 		position += right * amount;
 		break;
 	case Direction::UP:
-		position += up * amount;
+		position -= up * amount;
 		break;
 	case Direction::DOWN:
-		position -= up * amount;
+		position += up * amount;
 		break;
 	}
 }

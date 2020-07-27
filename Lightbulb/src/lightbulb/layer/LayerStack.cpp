@@ -47,10 +47,10 @@ void LayerStack::update()
 	for (it; it != layerStack.rend(); it++)
 	{
 		auto layer = *it;
-		layer->update();
+		layer->layerUpdate();
 	}
 
-	if (overlay != nullptr) overlay->update();
+	if (overlay != nullptr) overlay->layerUpdate();
 }
 
 void LayerStack::render()

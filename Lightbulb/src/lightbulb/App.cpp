@@ -25,6 +25,7 @@ void App::run()
 	{
 		window->onUpdate();
 		handleEvents();
+		layerStack->update();
 		update();
 		layerStack->render();
 		render();

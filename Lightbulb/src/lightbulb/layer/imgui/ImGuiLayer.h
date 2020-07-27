@@ -9,7 +9,7 @@ public:
 	{}
 	void init() override;
 	virtual void onLayerEvent(const std::shared_ptr<event::Event>& evt) override;
-	virtual void update() override;
+	virtual void layerUpdate() override {}
 	virtual void render() = 0;
 	virtual void renderLayer() override;
 	virtual void shutdown() override;

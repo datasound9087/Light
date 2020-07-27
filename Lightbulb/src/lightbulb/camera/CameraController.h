@@ -2,6 +2,7 @@
 #include "lightbulb\camera\ICamera.h"
 #include "lightbulb/event/Event.h"
 #include "lightbulb/event/KeyboardEvents.h"
+#include "lightbulb/event/WindowEvents.h"
 #include "lightbulb/event/MouseEvents.h"
 
 class CameraController
@@ -18,6 +19,8 @@ public:
 
 	void onEvent(const std::shared_ptr<event::Event>& evt);
 	void update();
+
+	void onResize(const std::shared_ptr<event::WindowResizedEvent>& evt);
 
 	void lock() { locked = true; }
 	void unlock() { locked = false; }

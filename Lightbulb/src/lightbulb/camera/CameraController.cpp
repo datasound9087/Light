@@ -36,6 +36,11 @@ void CameraController::update()
 	camera->update();
 }
 
+void CameraController::onResize(const std::shared_ptr<event::WindowResizedEvent>& evt)
+{
+	camera->onResize(evt->getWidth(), evt->getHeight());
+}
+
 void CameraController::processMouseMove(const std::shared_ptr<event::MouseMovedEvent>& evt)
 {
 	double xOffset = evt->getXPos() * mouseSensitivity;
