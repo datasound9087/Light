@@ -17,4 +17,11 @@
 #include "graphics/resource/shader/ShaderLibrary.h"
 #include "graphics/resource/texture/Texture2D.h"
 #include "graphics/resource/texture/TextureLibrary.h"
+#include "graphics/resource/texture/TextureAtlas.h"
 #include "graphics/Renderer2D.h"
+
+//cameras
+#include "lightbulb/camera/ICamera.h"
+#include "lightbulb/camera/CameraController.h"
+#include "lightbulb/camera/PerspectiveCamera.h"
+#include "lightbulb/camera/OrthographicCamera.h"

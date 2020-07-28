@@ -45,6 +45,7 @@ void App::run()
 
 		if (timeCounter >= 1.0)
 		{
+			INFO("{0} {1}", ups, fps);
 			layerStack->tick();
 			tick();
 			timeCounter = 0.0;

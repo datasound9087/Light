@@ -7,7 +7,6 @@ std::unique_ptr<App> lightbulb::createApp()
 
 void CubeLight::init()
 {
-	world = std::make_unique<World>("Test");
 }
 
 void CubeLight::update()
@@ -15,5 +14,9 @@ void CubeLight::update()
 }
 
 void CubeLight::render()
+{
+}
+
+void CubeLight::onEvent(const std::shared_ptr<event::Event>& event)
 {
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AtlasElement.h"
+#include "lightbulb/util/Side.h"
 
 struct AtlasLayout
 {
@@ -8,12 +9,7 @@ struct AtlasLayout
 
 	void addElement(const std::string& name, const AtlasElement& elem)
 	{
-		if (elements.count(name) == 0)
-		{
-			ERROR("Cannot find {0} in AtlsLayout", name);
-			return;
-		}
-		elements.emplace(name, elem);
+		elements.insert({ name, elem });
 	}
 
 	void addCubeElements(const std::string& name, glm::ivec2 position, glm::ivec2 size)
@@ -24,5 +20,21 @@ struct AtlasLayout
 		addElement(name + ":back", AtlasElement(glm::ivec2(position.x + (3 * size.x), position.y), size));
 		addElement(name + ":top", AtlasElement(glm::ivec2(position.x + (4 * size.x), position.y), size));
 		addElement(name + ":bottom", AtlasElement(glm::ivec2(position.x + (5 * size.x), position.y), size));
+	}
+
+	const std::string getTexNameOfSide(std::string& name, const Side& side) const
+	{
+		std::string texName = name;
+		switch (side)
+		{
+		case Side::FRONT: texName += ":front";
+		case Side::LEFT: texName += ":left";
+		case Side::BACK: texName += ":back";
+		case Side::RIGHT: texName += ":right";
+		case Side::TOP: texName += ":top";
+		case Side::BOTTOM: texName += ":bottom";
+		}
+
+		return texName;
 	}
 };

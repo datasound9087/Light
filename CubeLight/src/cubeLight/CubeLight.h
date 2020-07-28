@@ -8,10 +8,8 @@ class CubeLight : public App
 {
 public:
 	void init() override;
-	virtual void update() override;
-	virtual void render() override;
-
-private:
-	std::unique_ptr<World> world;
+	void update() override;
+	void render() override;
+	void onEvent(const std::shared_ptr<event::Event>& event) override;
 };
 
