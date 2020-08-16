@@ -13,19 +13,7 @@ public:
 	static const float DEFAULT_ZOOM_LEVEL_MAX;
 
 public:
-	ICamera(const glm::mat4& projMatrix, float aspectRatio, float zNear, float zFar)
-		: projMatrix(projMatrix), worldUp(glm::vec3(0.0f, 1.0f, 0.0f)), up(worldUp), aspectRatio(aspectRatio), zNear(zNear), zFar(zFar)
-	{
-		update();
-	}
-
-	ICamera(const glm::mat4& projMatrix, float aspectRatio, float zNear, float zFar, const glm::vec3& position)
-		: projMatrix(projMatrix), position(position), worldUp(glm::vec3(0.0f, 1.0f, 0.0f)), aspectRatio(aspectRatio), up(worldUp), zNear(zNear), zFar(zFar)
-	{
-		update();
-	}
-
-	ICamera(const glm::mat4& projMatrix, float aspectRatio, float zNear, float zFar, const glm::vec3& position, const glm::vec3& worldUp)
+	ICamera(const glm::mat4& projMatrix, float aspectRatio, float zNear, float zFar, const glm::vec3& position, const glm::vec3& dir, float yaw, float pitch, const glm::vec3& worldUp)
 		: projMatrix(projMatrix), aspectRatio(aspectRatio), position(position), zNear(zNear), zFar(zFar), worldUp(worldUp), up(worldUp)
 	{
 		update();
@@ -35,6 +23,12 @@ public:
 	void update();
 	virtual void onResize(int width, int height) = 0;
 
+	virtual void move(const Direction& dir, float amount) = 0;
+	void moveX(float amount) { position.x += amount; }
+	void moveY(float amount) { position.y += amount; }
+	void moveZ(float amount) { position.z += amount; }
+	void move(const glm::vec3& amount) { position += amount; }
+
 	const glm::mat4& getViewProjMatrix() const { return projViewMatrix; }
 	const glm::mat4& getViewMatrix() const { return viewMatrix; };
 	const glm::mat4& getProjMatrix() const { return projMatrix; }
@@ -42,17 +36,13 @@ public:
 	const glm::vec3& getPosition() const { return position; }
 	void setPosition(const glm::vec3& pos) { position = pos; }
 	
-	void move(const Direction& direction, float amount);
-	void moveX(float amount) { position.x += amount; }
-	void moveY(float amount) { position.y += amount; }
-	void moveZ(float amount) { position.z += amount; }
-	void move(const glm::vec3& amount) { position += amount; }
-
 	const glm::vec3& getDirection() const { return direction; }
-	void setDirection(const glm::vec3& direction) { this->direction = direction; }
+	void setDirection(const glm::vec3& dir) { this->direction = dir; }
 
-	float getYaw() const { return yaw; }
-	void setYaw(float yaw) { this->yaw = yaw; }
+	const float getYaw() const { return yaw; }
+	void setYaw(float yaw);
+	bool isYawInverted() { return yawInverted; }
+	bool invertYaw(bool invert) { yawInverted = invert; }
 
 	float getPitch() const { return pitch; }
 	void setPitch(float pitch);
@@ -92,6 +82,7 @@ protected:
 	float yaw = -90.0f;
 	float pitch = 0.0f;
 	bool constrainPitch = true;
+	bool yawInverted = true;
 
 	float minZoom = DEFAULT_ZOOM_LEVEL_MIN;
 	float maxZoom = DEFAULT_ZOOM_LEVEL_MAX;

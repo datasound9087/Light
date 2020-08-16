@@ -21,15 +21,15 @@ void CameraController::update()
 	if (!locked && canMove)
 	{
 		float velocity = movementSpeed;
-		if (Input::isKeyPressed(input::KEY_W))
+		if (Input::isKeyPressed(moveUpKey))
 			camera->move(Direction::UP, velocity);
 
-		else if (Input::isKeyPressed(input::KEY_S))
+		else if (Input::isKeyPressed(moveDownKey))
 			camera->move(Direction::DOWN, velocity);
 
-		if (Input::isKeyPressed(input::KEY_A))
+		if (Input::isKeyPressed(moveLeftKey))
 			camera->move(Direction::LEFT, velocity);
-		else if (Input::isKeyPressed(input::KEY_D))
+		else if (Input::isKeyPressed(moveRightKey))
 			camera->move(Direction::RIGHT, velocity);
 	}
 

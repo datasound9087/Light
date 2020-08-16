@@ -12,23 +12,12 @@ void ICamera::update()
 	updateProjViewMatrix();
 }
 
-void ICamera::move(const Direction& direction, float amount)
+void ICamera::setYaw(float yaw)
 {
-	switch (direction)
-	{
-	case Direction::LEFT:
-		position -= right * amount;
-		break;
-	case Direction::RIGHT:
-		position += right * amount;
-		break;
-	case Direction::UP:
-		position -= up * amount;
-		break;
-	case Direction::DOWN:
-		position += up * amount;
-		break;
-	}
+	if (yawInverted)
+		this->yaw = -yaw;
+	else
+		this->yaw = yaw;
 }
 
 void ICamera::setPitch(float pitch)
