@@ -2,6 +2,7 @@
 
 #include "lightbulb/core/Window.h"
 #include "event/WindowEvents.h"
+#include "event/KeyboardEvents.h"
 #include "layer/LayerStack.h"
 
 class App
@@ -39,6 +40,7 @@ private:
 	void handleEvents();
 	void WindowClosing(const std::shared_ptr<event::WindowClosedEvent>& evt);
 	void windowResize(const std::shared_ptr<event::WindowResizedEvent>& evt);
+	void handleInternalKeys(const std::shared_ptr<event::KeyboardPressedEvent>& evt);
 
 protected:
 	std::shared_ptr<Window> window;

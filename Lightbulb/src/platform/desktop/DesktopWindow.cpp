@@ -48,6 +48,17 @@ void DesktopWindow::setVsync(const bool enabled)
 	glfwSwapInterval(props.vsync);
 }
 
+bool DesktopWindow::hasMouse() const
+{
+	return props.captureMouse;
+}
+
+void DesktopWindow::captureMouse(const bool should)
+{
+	props.captureMouse = should;
+	glfwSetInputMode(window, GLFW_CURSOR, should ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+}
+
 void DesktopWindow::setFullscreen(const bool enabled)
 {
 	if (enabled)

@@ -52,5 +52,5 @@ void CameraController::processMouseMove(const std::shared_ptr<event::MouseMovedE
 
 void CameraController::processMouseScroll(const std::shared_ptr<event::MouseScrolledEvent>& evt)
 {
-	camera->setZoom((float)evt->getYOffset() * scrollSensitivity);
+	camera->doZoom((float)evt->getYOffset() * scrollSensitivity);
 }

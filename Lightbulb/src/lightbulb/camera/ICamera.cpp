@@ -1,5 +1,6 @@
 #include "lbpch.h"
 #include "lightbulb/camera/ICamera.h"
+#include <glm/gtx/string_cast.hpp>
 
 const float ICamera::DEFAULT_ZOOM_LEVEL_MIN = 1.0f;
 const float ICamera::DEFAULT_ZOOM_LEVEL_MAX = 45.0f;
@@ -42,6 +43,12 @@ void ICamera::setZoom(float zoom)
 {
 	this->zoom = zoom;
 	glm::clamp(this->zoom, minZoom, maxZoom);
+}
+
+void ICamera::doZoom(float offset)
+{	
+	zoom += offset;
+	glm::clamp(zoom, minZoom, maxZoom);
 }
 
 void ICamera::updateProjViewMatrix()

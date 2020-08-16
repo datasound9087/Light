@@ -81,6 +81,7 @@ void App::handleEvents()
 		event::EventDispatcher dispatcher(evt);
 		dispatcher.dispatch<event::WindowClosedEvent>(EVENT_BIND_FUNC(App::WindowClosing));
 		dispatcher.dispatch<event::WindowResizedEvent>(EVENT_BIND_FUNC(App::windowResize));
+		dispatcher.dispatch<event::KeyboardPressedEvent>(EVENT_BIND_FUNC(App::handleInternalKeys));
 
 		onEvent(evt);
 		layerStack->onEvent(evt);
@@ -96,4 +97,15 @@ void App::WindowClosing(const std::shared_ptr<event::WindowClosedEvent>& evt)
 void App::windowResize(const std::shared_ptr<event::WindowResizedEvent>& evt)
 {
 	RenderCommands::setViewport(0, 0, evt->getWidth(), evt->getHeight());
+}
+
+void App::handleInternalKeys(const std::shared_ptr<event::KeyboardPressedEvent>& evt)
+{
+	if (evt->getKey() == input::KEY_F1)
+		window->captureMouse(!window->hasMouse());
+	else if (evt->getKey() == input::KEY_ESCAPE)
+	{
+		windowClosing();
+		running = false;
+	}
 }

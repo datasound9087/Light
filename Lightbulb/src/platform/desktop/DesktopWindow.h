@@ -19,6 +19,8 @@ public:
 
 	bool isVsync() const override { return props.vsync; }
 	void setVsync(const bool enabled) override;
+	bool hasMouse() const override;
+	void captureMouse(const bool should) override;
 	bool isFullscreen() const override { return props.fullscreen; };
 	void setFullscreen(const bool enabled) override;
 	bool isResizeable() const override { return props.resizeable; };

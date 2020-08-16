@@ -19,8 +19,14 @@ public:
 		update();
 	}
 
-	ICamera(const glm::mat4& projMatrix, const glm::vec3& position, float aspectRatio, float zNear, float zFar)
+	ICamera(const glm::mat4& projMatrix, float aspectRatio, float zNear, float zFar, const glm::vec3& position)
 		: projMatrix(projMatrix), position(position), worldUp(glm::vec3(0.0f, 1.0f, 0.0f)), aspectRatio(aspectRatio), up(worldUp), zNear(zNear), zFar(zFar)
+	{
+		update();
+	}
+
+	ICamera(const glm::mat4& projMatrix, float aspectRatio, float zNear, float zFar, const glm::vec3& position, const glm::vec3& worldUp)
+		: projMatrix(projMatrix), aspectRatio(aspectRatio), position(position), zNear(zNear), zFar(zFar), worldUp(worldUp), up(worldUp)
 	{
 		update();
 	}
@@ -60,6 +66,7 @@ public:
 
 	float getZoom() const { return zoom; }
 	void setZoom(float zoom);
+	void doZoom(float offset);
 	void resetZoom() { setZoom(DEFAULT_ZOOM_LEVEL); }
 
 	float getNear() const { return zNear; }
@@ -71,7 +78,7 @@ public:
 	float getAspectRatio() const { return aspectRatio; }
 	void setAspectRatio(float aspectRatio) { this->aspectRatio = aspectRatio; }
 
-protected:
+private:
 	void updateProjViewMatrix();
 	void updateCameraVectors();
 

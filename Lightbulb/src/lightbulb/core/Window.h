@@ -11,6 +11,7 @@ struct WindowProps
 	bool vsync;
 	bool resizeable;
 	bool visible;
+	bool captureMouse;
 
 	WindowProps(const std::string& name = "App",
 		uint32_t width = 640,
@@ -19,7 +20,8 @@ struct WindowProps
 		bool vsync = true,
 		bool resizeable = true,
 		bool visible = true)
-		: name(name), width(width), height(height), fullscreen(fullscreen), vsync(vsync), resizeable(resizeable), visible(visible)
+		: name(name), width(width), height(height), fullscreen(fullscreen), vsync(vsync), resizeable(resizeable), visible(visible),
+		captureMouse(false)
 	{}
 };
 
@@ -37,6 +39,8 @@ public:
 	virtual void setHeight(const uint32_t height) = 0;
 	virtual bool isVsync() const = 0;
 	virtual void setVsync(const bool enabled) = 0;
+	virtual bool hasMouse() const = 0;
+	virtual void captureMouse(const bool should) = 0;
 	virtual bool isFullscreen() const = 0;
 	virtual void setFullscreen(const bool enabled) = 0;
 	virtual bool isResizeable() const = 0;

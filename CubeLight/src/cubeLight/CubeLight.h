@@ -11,5 +11,9 @@ public:
 	void update() override;
 	void render() override;
 	void onEvent(const std::shared_ptr<event::Event>& event) override;
+
+private:
+	std::unique_ptr<Renderer2D> renderer;
+	std::unique_ptr<CameraController> camera;
 };
 
