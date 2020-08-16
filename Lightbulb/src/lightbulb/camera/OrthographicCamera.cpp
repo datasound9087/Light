@@ -8,7 +8,7 @@ const float OrthographicCamera::DEFAULT_Z_FAR = 1.0f;
 OrthographicCamera::OrthographicCamera(float left, float right, float top, float bottom)
 	: ICamera(glm::ortho(left, right, bottom, top, DEFAULT_Z_NEAR, DEFAULT_Z_FAR), calcAspectRatio(left, right, top, bottom),
 		DEFAULT_Z_NEAR, DEFAULT_Z_FAR, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, -1.0f }, -90.0f, 0.0f, {0.0f, 1.0f, 0.0f}),
-	left(left), right(right), top(top), bottom(bottom)
+	winLeft(left), winRight(right), winTop(top), winBottom(bottom)
 {
 }
 
@@ -48,13 +48,13 @@ void OrthographicCamera::setView(float left, float right, float top, float botto
 
 void OrthographicCamera::onResize(int width, int height)
 {
-	right = width;
-	if (top > bottom)
-		top = height;
+	winRight = width;
+	if (winTop > winBottom)
+		winTop = height;
 	else
-		bottom = height;
+		winBottom = height;
 
-	setView(left, right, top, bottom);
+	setView(winLeft, winRight, winTop, winBottom);
 }
 
 float OrthographicCamera::calcAspectRatio(float left, float right, float top, float bottom)

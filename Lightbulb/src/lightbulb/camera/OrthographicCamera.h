@@ -21,8 +21,8 @@ private:
 	float calcAspectRatio(float left, float right, float top, float bottom);
 
 private:
-	float left;
-	float right;
-	float top;
-	float bottom;
+	float winLeft;
+	float winRight;
+	float winTop;
+	float winBottom;
 };
