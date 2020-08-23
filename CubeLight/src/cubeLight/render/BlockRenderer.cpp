@@ -1,17 +1,21 @@
-#include "CubeRenderer.h"
+#include "BlockRenderer.h"
 
 #include "lightbulb/graphics/RenderCommands.h"
 
-CubeRenderer::CubeRenderer(const std::shared_ptr<ICamera>& camera)
+BlockRenderer::BlockRenderer(const std::shared_ptr<ICamera>& camera)
 	: camera(camera)
 {
 	init();
 }
 
-void CubeRenderer::init()
+void BlockRenderer::init()
 {
-	float verticies[] =
-	{
+    AtlasLayout layout;
+    layout.addCubeElements("testCube", { 0, 0 }, { 128, 128 });
+    atlas = std::make_unique<TextureAtlas>(Texture2D::create("cube", "C:\\Users\\Sam\\source\\repos\\Light\\CubeLight\\assets\\textures\\atlas.png"), layout);
+
+    float verticies[] =
+    {
         -0.5f, -0.5f, -0.5f,
          0.5f, -0.5f, -0.5f,
          0.5f,  0.5f, -0.5f,
@@ -65,7 +69,7 @@ void CubeRenderer::init()
 }
 
 
-void CubeRenderer::drawCube(const glm::vec3& pos)
+void BlockRenderer::drawCube(const glm::vec3& pos)
 {
     cubeBuffer->bind();
     cubeShader->bind();

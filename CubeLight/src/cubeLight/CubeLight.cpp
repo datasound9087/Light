@@ -13,7 +13,7 @@ void CubeLight::init()
 	camera->setMovementSpeed(0.1f);
 	camera->update();
 
-	cubeRenderer = std::make_unique<CubeRenderer>(camera->getCamera());
+	blockRenderer = std::make_unique<BlockRenderer>(camera->getCamera());
 }
 
 void CubeLight::update()
@@ -24,7 +24,7 @@ void CubeLight::update()
 void CubeLight::render()
 {
 	RenderCommands::clear();
-	cubeRenderer->drawCube({ 0.0f, 0.0f, 0.0f });
+	blockRenderer->drawCube({ 0.0f, 0.0f, 0.0f });
 }
 
 void CubeLight::onEvent(const std::shared_ptr<event::Event>& event)

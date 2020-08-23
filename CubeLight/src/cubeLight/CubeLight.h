@@ -3,7 +3,7 @@
 #include <lightbulb/Lightbulb.h>
 
 #include "cubeLight/world/World.h"
-#include "cubeLight/render/CubeRenderer.h"
+#include "cubeLight/render/BlockRenderer.h"
 
 class CubeLight : public App
 {
@@ -15,6 +15,6 @@ public:
 
 private:
 	std::unique_ptr<CameraController> camera;
-	std::unique_ptr<CubeRenderer> cubeRenderer;
+	std::unique_ptr<BlockRenderer> blockRenderer;
 };
 

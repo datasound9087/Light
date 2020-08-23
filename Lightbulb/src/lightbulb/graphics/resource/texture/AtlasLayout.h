@@ -14,12 +14,12 @@ struct AtlasLayout
 
 	void addCubeElements(const std::string& name, glm::ivec2 position, glm::ivec2 size)
 	{
-		addElement(name + ":front", AtlasElement(position, size));
-		addElement(name + ":left", AtlasElement(glm::ivec2(position.x + (1 * size.x), position.y), size));
-		addElement(name + ":right", AtlasElement(glm::ivec2(position.x + (2 * size.x), position.y), size));
-		addElement(name + ":back", AtlasElement(glm::ivec2(position.x + (3 * size.x), position.y), size));
-		addElement(name + ":top", AtlasElement(glm::ivec2(position.x + (4 * size.x), position.y), size));
-		addElement(name + ":bottom", AtlasElement(glm::ivec2(position.x + (5 * size.x), position.y), size));
+		addElement(name + Sides::toString(Side::FRONT), AtlasElement(position, size));
+		addElement(name + Sides::toString(Side::LEFT), AtlasElement(glm::ivec2(position.x + (1 * size.x), position.y), size));
+		addElement(name + Sides::toString(Side::RIGHT), AtlasElement(glm::ivec2(position.x + (2 * size.x), position.y), size));
+		addElement(name + Sides::toString(Side::BACK), AtlasElement(glm::ivec2(position.x + (3 * size.x), position.y), size));
+		addElement(name + Sides::toString(Side::TOP), AtlasElement(glm::ivec2(position.x + (4 * size.x), position.y), size));
+		addElement(name + Sides::toString(Side::BOTTOM), AtlasElement(glm::ivec2(position.x + (5 * size.x), position.y), size));
 	}
 
 	const std::string getTexNameOfSide(std::string& name, const Side& side) const
@@ -27,12 +27,24 @@ struct AtlasLayout
 		std::string texName = name;
 		switch (side)
 		{
-		case Side::FRONT: texName += ":front";
-		case Side::LEFT: texName += ":left";
-		case Side::BACK: texName += ":back";
-		case Side::RIGHT: texName += ":right";
-		case Side::TOP: texName += ":top";
-		case Side::BOTTOM: texName += ":bottom";
+		case Side::FRONT:
+			texName += Sides::toString(Side::FRONT);
+			break;
+		case Side::LEFT:
+			texName += Sides::toString(Side::LEFT);
+			break;
+		case Side::BACK:
+			texName += Sides::toString(Side::BACK);
+			break;
+		case Side::RIGHT:
+			texName += Sides::toString(Side::RIGHT);
+			break;
+		case Side::TOP:
+			texName += Sides::toString(Side::TOP);
+			break;
+		case Side::BOTTOM:
+			texName += Sides::toString(Side::BOTTOM);
+			break;
 		}
 
 		return texName;
