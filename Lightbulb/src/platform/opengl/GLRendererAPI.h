@@ -12,5 +12,6 @@ public:
 	void setClearColour(const glm::vec4& colour) override;
 	void clear() override;
 	void drawIndexed(uint32_t count) override;
+	void drawArrays(const DrawType& type, uint32_t count) override;
 };
 

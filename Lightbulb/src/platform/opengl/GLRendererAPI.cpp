@@ -64,3 +64,24 @@ void GLRendererAPI::drawIndexed(uint32_t count)
 {
 	glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
 }
+
+void GLRendererAPI::drawArrays(const DrawType& type, uint32_t count)
+{
+	switch (type)
+	{
+	case DrawType::TRIANGLES:
+		glDrawArrays(GL_TRIANGLES, 0, count);
+		break;
+	case DrawType::LINES:
+		glDrawArrays(GL_LINE, 0, count);
+		break;
+	case DrawType::POINT:
+		glDrawArrays(GL_POINT, 0, count);
+		break;
+	case DrawType::TRIANGLE_STRIP:
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, count);
+		break;
+	default:
+		ERROR("Invalid drawType for OpenGL");
+	}
+}

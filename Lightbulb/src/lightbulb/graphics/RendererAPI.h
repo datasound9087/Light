@@ -1,6 +1,7 @@
 #include "lbpch.h"
 
 #include <glm/vec4.hpp>
+#include "lightbulb/graphics/RenderDrawTypes.h"
 
 #pragma once
 class RendererAPI
@@ -22,6 +23,7 @@ public:
 	virtual void setClearColour(const glm::vec4& colour) = 0;
 	virtual void clear() = 0;
 	virtual void drawIndexed(uint32_t count) = 0;
+	virtual void drawArrays(const DrawType& type, uint32_t count) = 0;
 
 private:
 	static API api;

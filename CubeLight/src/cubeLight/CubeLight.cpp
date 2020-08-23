@@ -9,10 +9,11 @@ void CubeLight::init()
 {
 	window->captureMouse(true);
 	camera = std::make_unique<CameraController>(std::make_shared<PerspectiveCamera>(80.0f, window->getWidth(), window->getHeight()), true, true, true);
-	renderer = std::make_unique<Renderer2D>(camera->getCamera());
 	camera->getCamera()->setPosition({ 0.0f, 0.0f, 2.0f }); //back 2
 	camera->setMovementSpeed(0.1f);
 	camera->update();
+
+	cubeRenderer = std::make_unique<CubeRenderer>(camera->getCamera());
 }
 
 void CubeLight::update()
@@ -22,12 +23,8 @@ void CubeLight::update()
 
 void CubeLight::render()
 {
-	renderer->beginScene();
-
-	renderer->drawQuad(glm::vec2(-0.5f, -0.5f), glm::vec2(1.0f), glm::vec4(1.0f));
-
-	renderer->endScene();
-	renderer->flush();
+	RenderCommands::clear();
+	cubeRenderer->drawCube({ 0.0f, 0.0f, 0.0f });
 }
 
 void CubeLight::onEvent(const std::shared_ptr<event::Event>& event)

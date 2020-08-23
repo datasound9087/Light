@@ -22,3 +22,8 @@ void RenderCommands::drawIndexed(uint32_t count)
 {
 	renderAPI->drawIndexed(count);
 }
+
+void RenderCommands::drawArrays(const DrawType& type, uint32_t count)
+{
+	renderAPI->drawArrays(type, count);
+}
