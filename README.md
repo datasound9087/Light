@@ -1,2 +1,2 @@
 # Light
-3D and 2D graphics engine.
+Prototype 2D and 3D graphics engine.
