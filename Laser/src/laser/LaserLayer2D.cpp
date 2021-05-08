@@ -14,7 +14,7 @@ LaserLayer2D::~LaserLayer2D()
 
 void LaserLayer2D::init()
 {
-	renderer->setFont(Font::create("C:\\Users\\Sam\\source\\repos\\Light\\Laser\\assets\\fonts\\Arial.ttf", 28));
+	renderer->setFont(Font::create("font here", 28));
 	controller = std::make_unique<CameraController>(renderer->getCamera(), true, false, false);
 }
 
